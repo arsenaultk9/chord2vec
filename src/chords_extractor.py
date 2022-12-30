@@ -10,6 +10,7 @@ def extract_chords(song) -> List[Chord]:
         for chordData in chordMeasure['Chords']:
             chord = Chord(chordData)
 
+            # Group chords that are exactly the same
             if len(song_chords) > 0 and str(chord) == str(song_chords[-1]):
                 continue
 
