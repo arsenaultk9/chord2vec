@@ -1,6 +1,4 @@
-import pickle
 
-with open('./data/training_data.pkl', 'rb') as file:
-    data = pickle.load(file, encoding="latin1")
+from src.data_loader import load_data
 
-print(data)
+cbow_dataset = load_data()
