@@ -3,6 +3,7 @@ import torch
 from torch.utils.data import DataLoader
 
 import src.midi_generator as midi_generator
+import src.note_generator as note_generator
 import src.constants as constants
 
 from src.data_loader import load_data
@@ -37,7 +38,7 @@ for song_index in range(random_start_seed, random_start_seed + 9):
     cbow_generator = NetworkCbowGenerator(network)
     (x_sequence, y_pred) = cbow_dataset[song_index:song_index+constants.BATCH_SIZE]
 
-    generated_song = cbow_generator.generate_sequence(x_sequence)
+    generated_sequence = cbow_generator.generate_sequence(x_sequence)
 
-    #generated_note_infos = note_generator.generate_note_info(generated_song)
-    #midi_generator.generate_midi(f'generated_file{file_index}.mid', generated_note_infos)
+    generated_note_infos = note_generator.generate_note_info(generated_sequence, vocabulary)
+    midi_generator.generate_midi(f'generated_file{file_index}.mid', generated_note_infos)
