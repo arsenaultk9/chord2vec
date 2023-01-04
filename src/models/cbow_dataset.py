@@ -8,7 +8,7 @@ class CbowDataset(Dataset):
     def __init__(self, sequences: List[List[int]], vocabulary: Dict[int, str]):
         self.X, self.Y = get_training_data(sequences, vocabulary)
 
-        self.length = len(sequences)
+        self.length = self.X.shape[0]
 
     def __len__(self):
         return self.length

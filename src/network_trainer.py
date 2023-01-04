@@ -26,6 +26,8 @@ class NetworkTrainer:
     def epoch_train(self, epoch):
         self.network.train()
 
+        losses = []
+
         for batch_idx, (x, y) in enumerate(self.train_data_loader):
             if len(x) < constants.BATCH_SIZE:
                 continue  # Do not support smaller tensors that are not of batch size as first dimension
@@ -38,18 +40,20 @@ class NetworkTrainer:
             output = self.network(x)
 
             loss = self.get_loss(output, y)
-            current_batch_loss = loss
 
-            current_batch_loss.backward()
+            loss.backward()
             self.optimizer.step()
+
+            losses.append(loss.item())
 
             if batch_idx % constants.BATCH_LOG_INTERVAL == 0 and batch_idx != 0:
                 current_item = batch_idx * len(x)
+                average_loss = sum(losses) / current_item
 
                 print('Train Epoch: {} [{}/{} ({:.0f}%)]\t\tAverage Loss: {:.6f}\t'.format(
                     f"{epoch:03d}",
                     f"{current_item:04d}",
                     len(self.train_data_loader.dataset),
                     100. * batch_idx / len(self.train_data_loader),
-                    current_batch_loss, # TODO: Correct this
+                    average_loss, 
                     ))
