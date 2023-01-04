@@ -14,7 +14,7 @@ vocabulary, cbow_dataset = load_data()
 
 train_data_loader = DataLoader(cbow_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 
-network = CbowNetwork(len(vocabulary.values())).to(device)
+network = CbowNetwork(len(vocabulary.suffixes_to_indexes.values())).to(device)
 trainer = NetworkTrainer(network, train_data_loader)
 
 for epoch in range(1, constants.EPOCHS + 1):

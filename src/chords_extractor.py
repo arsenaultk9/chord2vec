@@ -8,7 +8,7 @@ def extract_chords(song) -> List[Chord]:
 
     for chordMeasure in song['ChordsMeasures']:
         for chordData in chordMeasure['Chords']:
-            chord = Chord(chordData)
+            chord = Chord.create_from_json(chordData)
 
             # Group chords that are exactly the same
             if len(song_chords) > 0 and str(chord) == str(song_chords[-1]):

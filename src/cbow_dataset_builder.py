@@ -5,7 +5,7 @@ import torch
 
 import src.constants as constants
 
-def get_input_and_targets(sequences: List[List[int]], vocabulary: Dict[int, str]):
+def get_input_and_targets(sequences: List[List[int]]):
     Xs = []
     Ys = []
 
@@ -22,8 +22,8 @@ def get_input_and_targets(sequences: List[List[int]], vocabulary: Dict[int, str]
 
     return (Xs, Ys)
 
-def get_training_data(sequences: List[List[int]], vocabulary: Dict[int, str]):
-    Xs, Ys = get_input_and_targets(sequences, vocabulary)
+def get_training_data(sequences: List[List[int]]):
+    Xs, Ys = get_input_and_targets(sequences)
 
     X = torch.tensor(Xs, dtype=torch.long)
     Y = torch.tensor(Ys, dtype=torch.long)

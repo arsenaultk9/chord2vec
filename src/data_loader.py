@@ -7,4 +7,4 @@ def load_data():
         data = pickle.load(file, encoding="latin1")
 
     vocabulary = data['chords_vocabulary']
-    return (vocabulary, CbowDataset(data['data'], vocabulary))
+    return (vocabulary, CbowDataset(data['data']))
