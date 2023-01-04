@@ -7,7 +7,7 @@ from src.networks.cbow_network import CbowNetwork
 from src.network_trainer import NetworkTrainer
 
 
-use_cuda = False # torch.cuda.is_available()
+use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 
 vocabulary, cbow_dataset = load_data()

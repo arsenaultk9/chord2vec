@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 import src.constants as constants
 from src.networks.cbow_network import CbowNetwork
 
-use_cuda = False # torch.cuda.is_available()
+use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 
 class NetworkTrainer:
@@ -48,7 +48,7 @@ class NetworkTrainer:
 
             if batch_idx % constants.BATCH_LOG_INTERVAL == 0 and batch_idx != 0:
                 current_item = batch_idx * len(x)
-                average_loss = sum(losses) / current_item
+                average_loss = sum(losses) / batch_idx
 
                 print('Train Epoch: {} [{}/{} ({:.0f}%)]\t\tAverage Loss: {:.6f}\t'.format(
                     f"{epoch:03d}",
