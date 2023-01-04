@@ -1,10 +1,14 @@
+import random
 import torch
 from torch.utils.data import DataLoader
 
+import src.midi_generator as midi_generator
 import src.constants as constants
+
 from src.data_loader import load_data
 from src.networks.cbow_network import CbowNetwork
 from src.network_trainer import NetworkTrainer
+from src.network_cbow_generator import NetworkCbowGenerator
 
 
 use_cuda = torch.cuda.is_available()
@@ -19,3 +23,21 @@ trainer = NetworkTrainer(network, train_data_loader)
 
 for epoch in range(1, constants.EPOCHS + 1):
     trainer.epoch_train(epoch)
+
+# Turn off training mode & switch to model evaluation
+network.eval()
+
+# ==== Code to generate to midi. ====
+random_start_seed = random.randrange(0, len(cbow_dataset) - constants.BATCH_SIZE)
+
+for song_index in range(random_start_seed, random_start_seed + 9):
+    file_index = song_index - random_start_seed + 1
+    print(f'Generating song {file_index}')
+
+    cbow_generator = NetworkCbowGenerator(network)
+    (x_sequence, y_pred) = cbow_dataset[song_index:song_index+constants.BATCH_SIZE]
+
+    generated_song = cbow_generator.generate_sequence(x_sequence)
+
+    #generated_note_infos = note_generator.generate_note_info(generated_song)
+    #midi_generator.generate_midi(f'generated_file{file_index}.mid', generated_note_infos)
