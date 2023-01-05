@@ -15,9 +15,11 @@ from src.network_cbow_generator import NetworkCbowGenerator
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 
-vocabulary, cbow_dataset = load_data()
+vocabulary, cbow_train_dataset, cbow_valid_dataset, cbow_test_dataset = load_data()
 
-train_data_loader = DataLoader(cbow_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
+train_data_loader = DataLoader(cbow_train_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
+valid_data_loader = DataLoader(cbow_valid_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
+test_data_loader = DataLoader(cbow_test_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 
 network = CbowNetwork(len(vocabulary.suffixes_to_indexes.values())).to(device)
 trainer = NetworkTrainer(network, train_data_loader)
@@ -29,14 +31,13 @@ for epoch in range(1, constants.EPOCHS + 1):
 network.eval()
 
 # ==== Code to generate to midi. ====
-random_start_seed = random.randrange(0, len(cbow_dataset) - constants.BATCH_SIZE)
+random_seeds = random.sample(range(0, len(cbow_train_dataset) - constants.BATCH_SIZE), 9)
 
-for song_index in range(random_start_seed, random_start_seed + 9):
-    file_index = song_index - random_start_seed + 1
-    print(f'Generating song {file_index}')
+for file_index, song_index in enumerate(random_seeds):
+    print(f'Generating song {file_index + 1}')
 
     cbow_generator = NetworkCbowGenerator(network)
-    (x_sequence, y_pred) = cbow_dataset[song_index:song_index+constants.BATCH_SIZE]
+    (x_sequence, y_pred) = cbow_train_dataset[song_index:song_index+constants.BATCH_SIZE]
 
     generated_sequence = cbow_generator.generate_sequence(x_sequence)
 

@@ -23,11 +23,21 @@ for index, file_name in enumerate(file_names):
     all_song_chords.append(song_chords)
 
 chords_vocabulary = build_chords_vocab()
-training_data = get_training_data(all_song_chords, chords_vocabulary)
+all_data = get_training_data(all_song_chords, chords_vocabulary)
+
+all_data_lenght = len(all_data)
+test_split = all_data_lenght - int((all_data_lenght * 0.10))
+valid_split = test_split - int((all_data_lenght * 0.20))
+
+train_data = all_data[0:valid_split]
+valid_data = all_data[valid_split:test_split]
+test_data = all_data[test_split:all_data_lenght]
 
 data = {
     "chords_vocabulary": chords_vocabulary,
-    "data": training_data
+    "train": train_data,
+    "valid": valid_data,
+    "test": test_data
 }
 
 # Store data (serialize)
