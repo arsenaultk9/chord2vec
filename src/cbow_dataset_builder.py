@@ -12,12 +12,11 @@ def get_input_and_targets(sequences: List[List[int]]):
     for song in sequences:
         for start_pos in range(len(song) - constants.CBOW_INPUT_LENGTH - 1):
             input_end_pos = start_pos + constants.CBOW_INPUT_LENGTH
-            target_pos = input_end_pos + 1
 
             x_target_form = song[start_pos:input_end_pos]
             Xs.append(x_target_form)
 
-            y = song[target_pos]
+            y = song[input_end_pos] # This is good because for python [x:y] and [y] y is upper bound excluded in first form.
             Ys.append(y)
 
     return (Xs, Ys)
