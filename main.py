@@ -26,6 +26,9 @@ trainer = NetworkTrainer(network, train_data_loader, valid_data_loader, test_dat
 
 for epoch in range(1, constants.EPOCHS + 1):
     trainer.epoch_train(epoch)
+    trainer.epoch_valid(epoch)
+
+trainer.test()
 
 # Turn off training mode & switch to model evaluation
 network.eval()
