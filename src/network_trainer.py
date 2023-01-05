@@ -23,10 +23,18 @@ class NetworkTrainer:
     def get_loss(self, model_output, y_target):
         return self.loss_function(model_output, y_target)
 
+    def get_accuracy(self, model_output, y_target):
+        output_class_pred = model_output.argmax(dim=1)
+        equal_samples = torch.eq(output_class_pred, y_target)
+
+        return equal_samples.sum() / constants.BATCH_SIZE
+
+
     def epoch_train(self, epoch):
         self.network.train()
 
         losses = []
+        accuracies = []
 
         for batch_idx, (x, y) in enumerate(self.train_data_loader):
             if len(x) < constants.BATCH_SIZE:
@@ -40,20 +48,24 @@ class NetworkTrainer:
             output = self.network(x)
 
             loss = self.get_loss(output, y)
+            losses.append(loss.item())
 
             loss.backward()
             self.optimizer.step()
 
-            losses.append(loss.item())
+            accuracy = self.get_accuracy(output, y)
+            accuracies.append(accuracy.item())
 
             if batch_idx % constants.BATCH_LOG_INTERVAL == 0 and batch_idx != 0:
                 current_item = batch_idx * len(x)
                 average_loss = sum(losses) / batch_idx
+                average_accuracy = sum(accuracies) / batch_idx
 
-                print('Train Epoch: {} [{}/{} ({:.0f}%)]\t\tAverage Loss: {:.6f}\t'.format(
+                print('Train Epoch: {} [{}/{} ({:.0f}%)]\t\tAverage Loss: {:.6f}\tAverage Right Predictions: {:.4f}'.format(
                     f"{epoch:03d}",
                     f"{current_item:04d}",
                     len(self.train_data_loader.dataset),
                     100. * batch_idx / len(self.train_data_loader),
                     average_loss, 
+                    average_accuracy
                     ))
