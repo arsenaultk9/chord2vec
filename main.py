@@ -22,7 +22,7 @@ valid_data_loader = DataLoader(cbow_valid_dataset, constants.BATCH_SIZE, constan
 test_data_loader = DataLoader(cbow_test_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 
 network = CbowNetwork(len(vocabulary.suffixes_to_indexes.values())).to(device)
-trainer = NetworkTrainer(network, train_data_loader)
+trainer = NetworkTrainer(network, train_data_loader, valid_data_loader, test_data_loader)
 
 for epoch in range(1, constants.EPOCHS + 1):
     trainer.epoch_train(epoch)
