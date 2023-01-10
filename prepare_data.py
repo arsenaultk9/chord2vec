@@ -10,17 +10,20 @@ from src.training_data_preparator import get_training_data
 directory = 'data/'
 
 file_names = listdir(directory)
-file_names = file_names[0:18]
+file_names = file_names #[0:180]
 
 all_song_chords = []
 
 for index, file_name in enumerate(file_names):
     print("Data setup file number {} of {}".format(index, len(file_names)))
 
-    song = sl.load_song(directory + file_name)
-    song_chords = ce.extract_chords(song)
+    try:
+        song = sl.load_song(directory + file_name)
+        song_chords = ce.extract_chords(song)
 
-    all_song_chords.append(song_chords)
+        all_song_chords.append(song_chords)
+    except Exception as e:
+        print(e)
 
 chords_vocabulary = build_chords_vocab()
 all_data = get_training_data(all_song_chords, chords_vocabulary)
