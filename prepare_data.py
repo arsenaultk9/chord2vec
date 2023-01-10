@@ -10,7 +10,7 @@ from src.training_data_preparator import get_training_data
 directory = 'data/'
 
 file_names = listdir(directory)
-file_names = file_names #[0:180]
+file_names = file_names #[0:18]
 
 all_song_chords = []
 

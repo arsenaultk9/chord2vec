@@ -11,7 +11,7 @@ def generate_note_info(generated_sequence: List[int], vocabulary: ChordsVocab):
     cur_pos = 0
 
     for generated_item in generated_sequence:
-        chord = vocabulary.indexes_ot_chords[generated_item]
+        chord = vocabulary.indexes_to_chords[generated_item]
 
         for chord_note in chord.note_suffixes:
             note_pitch = notes_to_pitch[chord_note]
