@@ -33,6 +33,11 @@ trainer.test()
 # Turn off training mode & switch to model evaluation
 network.eval()
 
+# === Save model for production use ===
+(x_sequence, y_pred) = cbow_train_dataset[0:constants.BATCH_SIZE]
+traced_script_module = torch.jit.trace(network.forward, x_sequence.to(device))
+traced_script_module.save("result_model/cbow_network.pt")
+
 # ==== Code to generate to midi. ====
 random_seeds = random.sample(range(0, len(cbow_train_dataset) - constants.BATCH_SIZE), 9)
 
