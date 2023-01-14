@@ -1,6 +1,7 @@
 import pickle
 
 from src.models.cbow_dataset import CbowDataset
+from src.models.skipgram_dataset import SkipgramDataset
 
 def load_data():
     with open('./data/training_data.pkl', 'rb') as file:
@@ -14,8 +15,8 @@ def load_cbow_data():
     return (vocabulary, CbowDataset(data['train']), CbowDataset(data['valid']), CbowDataset(data['test']))
 
 
-def load_skip_gram_data():
+def load_skipgram_data():
     data = load_data()
 
     vocabulary = data['chords_vocabulary']
-    return (vocabulary, CbowDataset(data['train']), CbowDataset(data['valid']), CbowDataset(data['test']))
+    return (vocabulary, SkipgramDataset(data['train']), SkipgramDataset(data['valid']), SkipgramDataset(data['test']))
