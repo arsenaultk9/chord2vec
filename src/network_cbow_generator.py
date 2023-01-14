@@ -25,7 +25,7 @@ class NetworkCbowGenerator:
 
             generated_sequence.append(y_class_pred[0].item())
 
-            new_x_sequence = x_sequence[:, 1:constants.CBOW_INPUT_LENGTH]
+            new_x_sequence = x_sequence[:, 1:constants.INPUT_LENGTH]
             add_y_inputs = torch.reshape(y_class_pred, (constants.BATCH_SIZE, 1))
             x_sequence = torch.concat((new_x_sequence, add_y_inputs), 1)
 
