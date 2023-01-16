@@ -51,6 +51,14 @@ class Scale:
         return triad_chords
 
 
+    def get_chord_degress_triad(self, chord_degree: int):
+        note_a = get_note_in_bound(self.notes, chord_degree)
+        note_b = get_note_in_bound(self.notes, chord_degree + 2)
+        note_c = get_note_in_bound(self.notes, chord_degree + 4)
+
+        return ''.join(sorted([note_a, note_b, note_c]))
+
+
     def __str__(self):
         return f'root: {self.root}, mode: {self.mode}, notes: [ {", ".join(self.notes)} ]'
 
