@@ -51,6 +51,30 @@ class Scale:
         return triad_chords
 
 
+    def get_all_triads(self):
+        triad_chords = []
+
+        for note_a in self.notes:
+            chord_suffix = ''.join(sorted([note_a]))
+            triad_chords.append(chord_suffix)
+
+            for note_b in self.notes:
+                if note_a == note_b:
+                    continue
+
+                chord_suffix = ''.join(sorted([note_a, note_b]))
+                triad_chords.append(chord_suffix)
+
+                for note_c in self.notes:
+                    if note_a == note_c or note_b == note_c:
+                        continue
+
+                    chord_suffix = ''.join(sorted([note_a, note_b, note_c]))
+                    triad_chords.append(chord_suffix)
+
+        return triad_chords
+
+
     def get_chord_degress_triad(self, chord_degree: int):
         note_a = get_note_in_bound(self.notes, chord_degree)
         note_b = get_note_in_bound(self.notes, chord_degree + 2)

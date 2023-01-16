@@ -2,9 +2,20 @@ from src.models.scale import Scale
 from src.models.notes import notes
 
 
-def get_scale_triads_filter(chord_suffixes, scale: Scale):
+def get_scale_main_triads_filter(chord_suffixes, scale: Scale):
     colors = []
     scale_chords = scale.get_main_triads()
+
+    for chord_suffix in chord_suffixes:
+        color = 'red' if chord_suffix in scale_chords else 'lightgrey'
+        colors.append(color)
+
+    return colors
+
+
+def get_scale_all_triads_filter(chord_suffixes, scale: Scale):
+    colors = []
+    scale_chords = scale.get_all_triads()
 
     for chord_suffix in chord_suffixes:
         color = 'red' if chord_suffix in scale_chords else 'lightgrey'
