@@ -7,7 +7,7 @@ from src.models.chords_vocab_builder import build_chords_vocab
 from src.training_data_preparator import get_training_data
 
 
-directory = 'data/'
+directory = 'C:/dev/data/KafkaSongs-mer., janv. 18, 2023/'
 
 file_names = listdir(directory)
 file_names = file_names #[0:18]

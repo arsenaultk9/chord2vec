@@ -16,13 +16,13 @@ from src.network_cbow_generator import NetworkCbowGenerator
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 
-vocabulary, cbow_train_dataset, cbow_valid_dataset, cbow_test_dataset = load_cbow_data()
+vocabulary, cbow_train_dataset, cbow_valid_dataset, cbow_test_dataset = load_skipgram_data()
 
 train_data_loader = DataLoader(cbow_train_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 valid_data_loader = DataLoader(cbow_valid_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 test_data_loader = DataLoader(cbow_test_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 
-network = CbowNetwork(len(vocabulary.suffixes_to_indexes.values())).to(device)
+network = SkipgramNetwork(len(vocabulary.suffixes_to_indexes.values())).to(device)
 trainer = NetworkTrainer(network, train_data_loader, valid_data_loader, test_data_loader)
 
 for epoch in range(1, constants.EPOCHS + 1):
