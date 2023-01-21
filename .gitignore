@@ -129,7 +129,6 @@ dmypy.json
 .pyre/
 
 # Specific to repository
-data
 midi
 runs
 result_model
