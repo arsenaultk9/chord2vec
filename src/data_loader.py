@@ -1,10 +1,12 @@
 import pickle
 
+import src.constants as constants
+
 from src.models.cbow_dataset import CbowDataset
 from src.models.skipgram_dataset import SkipgramDataset
 
 def load_data():
-    with open('./data/training_data.pkl', 'rb') as file:
+    with open(constants.TRAINING_DATA_PATH, 'rb') as file:
         return pickle.load(file, encoding="latin1")
 
 

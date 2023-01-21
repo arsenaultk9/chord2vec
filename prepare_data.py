@@ -3,6 +3,8 @@ from os import listdir
 
 import src.song_loader as sl
 import src.chords_extractor as ce
+import src.constants as constants
+
 from src.models.chords_vocab_builder import build_chords_vocab
 from src.training_data_preparator import get_training_data
 
@@ -10,7 +12,7 @@ from src.training_data_preparator import get_training_data
 directory = 'C:/dev/data/KafkaSongs-mer., janv. 18, 2023/'
 
 file_names = listdir(directory)
-file_names = file_names #[0:18]
+file_names = file_names[0:27]
 
 all_song_chords = []
 
@@ -44,5 +46,5 @@ data = {
 }
 
 # Store data (serialize)
-with open('./data/training_data.pkl', 'wb') as handle:
+with open(constants.TRAINING_DATA_PATH, 'wb') as handle:
     pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)
