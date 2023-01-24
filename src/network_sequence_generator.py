@@ -1,14 +1,13 @@
 import torch
 
 import src.constants as constants
-from src.networks.cbow_network import CbowNetwork
 
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 
 
-class NetworkCbowGenerator:
-    def __init__(self, network: CbowNetwork):
+class NetworkSequenceGenerator:
+    def __init__(self, network):
         self.network = network
 
     def generate_sequence(self, x_sequence: torch.Tensor):

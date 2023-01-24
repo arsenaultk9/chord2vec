@@ -5,7 +5,7 @@ import src.constants as constants
 from src.models.generation_dataset import GenerationDataset
 
 def load_data():
-    with open(constants.EMBEDDING_TRAINING_DATA_PATH, 'rb') as file:
+    with open(constants.GENERATION_TRAINING_DATA_PATH, 'rb') as file:
         return pickle.load(file, encoding="latin1")
 
 

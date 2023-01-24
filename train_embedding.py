@@ -1,16 +1,12 @@
-import random
 import torch
 from torch.utils.data import DataLoader
 
-import src.midi_generator as midi_generator
-import src.note_generator as note_generator
 import src.constants as constants
 
 from embedding_data_loader import load_cbow_data, load_skipgram_data
 from src.networks.cbow_network import CbowNetwork
 from src.networks.skipgram_network import SkipgramNetwork
 from src.network_trainer import NetworkTrainer
-from src.network_cbow_generator import NetworkCbowGenerator
 
 
 use_cuda = torch.cuda.is_available()
@@ -38,18 +34,3 @@ network.eval()
 (x_sequence, y_pred) = cbow_train_dataset[0:constants.BATCH_SIZE]
 traced_script_module = torch.jit.trace(network.forward, x_sequence.to(device))
 traced_script_module.save("result_model/cbow_network.pt")
-
-# Rethink how data is generated. The model is to predict middle word and not the next word. <---------------------------------
-# # ==== Code to generate to midi. ====
-# random_seeds = random.sample(range(0, len(cbow_train_dataset) - constants.BATCH_SIZE), 9)
-
-# for file_index, song_index in enumerate(random_seeds):
-#     print(f'Generating song {file_index + 1}')
-
-#     cbow_generator = NetworkCbowGenerator(network)
-#     (x_sequence, y_pred) = cbow_train_dataset[song_index:song_index+constants.BATCH_SIZE]
-
-#     generated_sequence = cbow_generator.generate_sequence(x_sequence)
-
-#     generated_note_infos = note_generator.generate_note_info(generated_sequence, vocabulary)
-#     midi_generator.generate_midi(f'generated_file{file_index}.mid', generated_note_infos)
