@@ -46,5 +46,5 @@ data = {
 }
 
 # Store data (serialize)
-with open(constants.TRAINING_DATA_PATH, 'wb') as handle:
+with open(constants.EMBEDDING_TRAINING_DATA_PATH, 'wb') as handle:
     pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)

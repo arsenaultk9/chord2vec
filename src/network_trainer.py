@@ -25,8 +25,6 @@ class NetworkTrainer:
 
         self.loss_function = nn.CrossEntropyLoss()
         self.optimizer = optim.SGD(network.parameters(), lr=0.01, momentum=0.9)
-        
-        self.lr_scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, patience=3)
 
 
     def get_loss(self, model_output, y_target):

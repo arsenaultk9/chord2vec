@@ -1,7 +1,7 @@
 LOG_TENSORBOARD = True
 
-INPUT_LENGTH = 9
-MIDDLE_INPUT = 4
+INPUT_LENGTH = 5
+MIDDLE_INPUT = 2
 
 EMBED_DIMENSION = 25
 EMBED_MAX_NORM = None
@@ -17,7 +17,8 @@ APPLY_LR_SCHEDULER = True
 
 SEQUENCE_GENERATION_LENGTH = 18
 
-TRAINING_DATA_PATH = './data/training_data.pkl'
+EMBEDDING_TRAINING_DATA_PATH = './data/training_data.pkl'
+GENERATION_TRAINING_DATA_PATH = './data/training_data_small.pkl'
 
 # Data augmentation
 APPLY_SCALE_AUGMENTATION = False

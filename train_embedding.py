@@ -6,7 +6,7 @@ import src.midi_generator as midi_generator
 import src.note_generator as note_generator
 import src.constants as constants
 
-from src.data_loader import load_cbow_data, load_skipgram_data
+from embedding_data_loader import load_cbow_data, load_skipgram_data
 from src.networks.cbow_network import CbowNetwork
 from src.networks.skipgram_network import SkipgramNetwork
 from src.network_trainer import NetworkTrainer
