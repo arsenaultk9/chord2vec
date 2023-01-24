@@ -47,10 +47,10 @@ random_seeds = random.sample(range(0, len(test_dataset) - constants.BATCH_SIZE),
 for file_index, song_index in enumerate(random_seeds):
     print(f'Generating song {file_index + 1}')
 
-    cbow_generator = NetworkSequenceGenerator(network)
+    sequence_generator = NetworkSequenceGenerator(network)
     (x_sequence, y_pred) = test_dataset[song_index:song_index+constants.BATCH_SIZE]
 
-    generated_sequence = cbow_generator.generate_sequence(x_sequence)
+    generated_sequence = sequence_generator.generate_sequence(x_sequence)
 
     generated_note_infos = note_generator.generate_note_info(generated_sequence, vocabulary)
     midi_generator.generate_midi(f'generated_file{file_index}.mid', generated_note_infos)
