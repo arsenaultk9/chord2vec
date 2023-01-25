@@ -9,10 +9,10 @@ from src.models.chords_vocab_builder import build_chords_vocab
 from src.training_data_preparator import get_training_data
 
 
-directory = 'C:/dev/data/KafkaSongs-mer., janv. 18, 2023/'
+directory = 'C:/dev/data/KafkaSongs - Midi Files Personal/'
 
 file_names = listdir(directory)
-file_names = file_names[0:27]
+file_names = file_names #[0:27]
 
 all_song_chords = []
 
@@ -46,5 +46,5 @@ data = {
 }
 
 # Store data (serialize)
-with open(constants.EMBEDDING_TRAINING_DATA_PATH, 'wb') as handle:
+with open(constants.GENERATION_TRAINING_DATA_PATH, 'wb') as handle:
     pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)

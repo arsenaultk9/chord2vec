@@ -1,4 +1,4 @@
-1. Vanilla lstm with no pre trained embedding.                                      ->
+1. Vanilla lstm with no pre trained embedding.                                      -> OK
 2. Better lstm model architectures.                                                 ->
 3. Use personnal collection midi instead of LAHK for music generation_data_loader   ->
 4. Learning rate scheduler                                                          ->
