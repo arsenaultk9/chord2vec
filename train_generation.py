@@ -8,6 +8,7 @@ import src.constants as constants
 
 from src.generation_data_loader import load_generation_data
 from src.networks.lstm_embedding_network import LstmEmbeddingNetwork
+from src.networks.lstm_vanilla_network import LstmVanillaNetwork
 from src.network_trainer import NetworkTrainer
 from src.network_sequence_generator import NetworkSequenceGenerator
 
