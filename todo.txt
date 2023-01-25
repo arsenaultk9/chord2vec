@@ -1,0 +1,9 @@
+1. Vanilla lstm with no pre trained embedding.                                      ->
+2. Better lstm model architectures.                                                 ->
+3. Use personnal collection midi instead of LAHK for music generation_data_loader   ->
+4. Learning rate scheduler                                                          ->
+5. Change skipgram to output other chords instead of a single chord                 ->
+6. Fix Accuracy for skip gram                                                       ->
+7. Data augmentation with scale augmentation                                        ->
+8. Experiment with vector add/substract of embeddings                               ->
+9. Write medium article                                                             ->
