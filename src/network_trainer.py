@@ -135,9 +135,6 @@ class NetworkTrainer:
             loss = self.get_loss(output, y)
             results_aggregator.aggregate_loss(loss.item())
 
-            loss.backward()
-            self.optimizer.step()
-
             accuracy = self.get_accuracy(output, y)
             results_aggregator.aggregate_accuracy(accuracy.item())
 

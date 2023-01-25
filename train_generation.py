@@ -27,7 +27,7 @@ embedding_weigths = list(embedding_model.parameters())[0]
 network = LstmEmbeddingNetwork(len(vocabulary.suffixes_to_indexes.values()), embedding_weigths).to(device)
 trainer = NetworkTrainer(network, train_data_loader, valid_data_loader, test_data_loader)
 
-for epoch in range(1, constants.EPOCHS + 1):
+for epoch in range(1, constants.GENERATION_EPOCHS + 1):
     trainer.epoch_train(epoch)
     trainer.epoch_valid(epoch)
 
