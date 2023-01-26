@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader
 
 import src.constants as constants
 
-from embedding_data_loader import load_cbow_data, load_skipgram_data
+from src.embedding_data_loader import load_cbow_data, load_skipgram_data
 from src.networks.cbow_network import CbowNetwork
 from src.networks.skipgram_network import SkipgramNetwork
 from src.network_trainer import NetworkTrainer
