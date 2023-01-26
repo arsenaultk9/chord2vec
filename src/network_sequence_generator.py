@@ -14,12 +14,14 @@ class NetworkSequenceGenerator:
         generated_sequence = []
 
         x_sequence = x_sequence.to(device)
+        (h, c) = self.network.get_initial_hidden_context()
+
 
         for x_item in x_sequence[0]:
             generated_sequence.append(x_item.item())
 
         for _ in range(constants.SEQUENCE_GENERATION_LENGTH):
-            y_pred = self.network(x_sequence)
+            y_pred, (h, c) = self.network(x_sequence, (h, c))
             y_class_pred = y_pred.argmax(dim=1)
 
             generated_sequence.append(y_class_pred[0].item())

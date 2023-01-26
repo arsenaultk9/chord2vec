@@ -4,7 +4,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 import src.constants as constants
-from src.networks.cbow_network import CbowNetwork
+from src.networks.lstm_embedding_network import LstmEmbeddingNetwork
 from src.results_aggregator import ResultsAggregator
 
 use_cuda = torch.cuda.is_available()
@@ -12,7 +12,7 @@ device = torch.device("cuda" if use_cuda else "cpu")
 
 class NetworkTrainer:
     def __init__(self,
-                 network: CbowNetwork,
+                 network: LstmEmbeddingNetwork,
                  train_data_loader: DataLoader,
                  test_data_loader: DataLoader,
                  valid_data_loader: DataLoader):
@@ -42,6 +42,10 @@ class NetworkTrainer:
 
         results_aggregator = ResultsAggregator()
 
+        (h, c) = self.network.get_initial_hidden_context()
+
+        # TODO: Rendu à resetter hidden context pour chaque nouvelle chanson. <--------------------------------------------
+
         for batch_idx, (x, y) in enumerate(self.train_data_loader):
             if len(x) < constants.BATCH_SIZE:
                 continue  # Do not support smaller tensors that are not of batch size as first dimension
@@ -51,10 +55,13 @@ class NetworkTrainer:
             x = x.to(device)
             y = y.to(device)
 
-            output = self.network(x)
+            output, (h, c) = self.network(x, (h, c))
 
             loss = self.get_loss(output, y)
             results_aggregator.aggregate_loss(loss.item())
+
+            h = h.detach()
+            c = c.detach()
 
             loss.backward()
             self.optimizer.step()
@@ -83,6 +90,8 @@ class NetworkTrainer:
 
         results_aggregator = ResultsAggregator()
 
+        (h, c) = self.network.get_initial_hidden_context()
+
         for batch_idx, (x, y) in enumerate(self.valid_data_loader):
             if len(x) < constants.BATCH_SIZE:
                 continue  # Do not support smaller tensors that are not of batch size as first dimension
@@ -92,7 +101,7 @@ class NetworkTrainer:
             x = x.to(device)
             y = y.to(device)
 
-            output = self.network(x)
+            output, (h, c) = self.network(x, (h, c))
 
             loss = self.get_loss(output, y)
             results_aggregator.aggregate_loss(loss.item())
@@ -121,6 +130,8 @@ class NetworkTrainer:
 
         results_aggregator = ResultsAggregator()
 
+        (h, c) = self.network.get_initial_hidden_context()
+
         for _, (x, y) in enumerate(self.test_data_loader):
             if len(x) < constants.BATCH_SIZE:
                 continue  # Do not support smaller tensors that are not of batch size as first dimension
@@ -130,7 +141,7 @@ class NetworkTrainer:
             x = x.to(device)
             y = y.to(device)
 
-            output = self.network(x)
+            output, (h, c) = self.network(x, (h, c))
 
             loss = self.get_loss(output, y)
             results_aggregator.aggregate_loss(loss.item())
