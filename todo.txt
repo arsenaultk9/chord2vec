@@ -1,5 +1,5 @@
 1. Vanilla lstm with no pre trained embedding.                                      -> OK
-2. Propagate lstm hidden cell for generation.                                       -> <---------------------------------------------------------------------
+2. Propagate lstm hidden cell for generation.                                       -> 
 3. Better lstm model architectures.                                                 ->
 4. Use personnal collection midi instead of LAHK for music generation_data_loader   -> OK
 5. Learning rate scheduler                                                          ->
