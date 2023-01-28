@@ -43,12 +43,15 @@ class NetworkTrainer:
         results_aggregator = ResultsAggregator()
 
         (h, c) = self.network.get_initial_hidden_context()
+        cur_song_index = 0
 
-        # TODO: Rendu à resetter hidden context pour chaque nouvelle chanson. <--------------------------------------------
-
-        for batch_idx, (x, y) in enumerate(self.train_data_loader):
+        for batch_idx, (song_index, x, y) in enumerate(self.train_data_loader):
             if len(x) < constants.BATCH_SIZE:
                 continue  # Do not support smaller tensors that are not of batch size as first dimension
+
+            if cur_song_index != song_index.item():
+                (h, c) = self.network.get_initial_hidden_context()
+                cur_song_index = song_index.item()
 
             self.optimizer.zero_grad()
 
@@ -91,10 +94,15 @@ class NetworkTrainer:
         results_aggregator = ResultsAggregator()
 
         (h, c) = self.network.get_initial_hidden_context()
+        cur_song_index = 0
 
-        for batch_idx, (x, y) in enumerate(self.valid_data_loader):
+        for batch_idx, (song_index, x, y) in enumerate(self.valid_data_loader):
             if len(x) < constants.BATCH_SIZE:
                 continue  # Do not support smaller tensors that are not of batch size as first dimension
+
+            if cur_song_index != song_index.item():
+                (h, c) = self.network.get_initial_hidden_context()
+                cur_song_index = song_index.item()
 
             self.optimizer.zero_grad()
 
@@ -131,10 +139,15 @@ class NetworkTrainer:
         results_aggregator = ResultsAggregator()
 
         (h, c) = self.network.get_initial_hidden_context()
+        cur_song_index = 0
 
-        for _, (x, y) in enumerate(self.test_data_loader):
+        for _, (song_index, x, y) in enumerate(self.test_data_loader):
             if len(x) < constants.BATCH_SIZE:
                 continue  # Do not support smaller tensors that are not of batch size as first dimension
+
+            if cur_song_index != song_index.item():
+                (h, c) = self.network.get_initial_hidden_context()
+                cur_song_index = song_index.item()
 
             self.optimizer.zero_grad()
 

@@ -38,7 +38,7 @@ trainer.test()
 network.eval()
 
 # === Save model for production use ===
-(x_sequence, y_pred) = train_dataset[0:constants.BATCH_SIZE]
+(_, x_sequence, y_pred) = train_dataset[0:constants.BATCH_SIZE]
 (h, c) = network.get_initial_hidden_context()
 
 traced_script_module = torch.jit.trace(network.forward, (x_sequence.to(device), (h, c)))
@@ -51,7 +51,7 @@ for file_index, song_index in enumerate(random_seeds):
     print(f'Generating song {file_index + 1}')
 
     sequence_generator = NetworkSequenceGenerator(network)
-    (x_sequence, y_pred) = test_dataset[song_index:song_index+constants.BATCH_SIZE]
+    (_, x_sequence, y_pred) = test_dataset[song_index:song_index+constants.BATCH_SIZE]
 
     generated_sequence = sequence_generator.generate_sequence(x_sequence)
 

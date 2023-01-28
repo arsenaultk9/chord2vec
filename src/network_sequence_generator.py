@@ -16,7 +16,6 @@ class NetworkSequenceGenerator:
         x_sequence = x_sequence.to(device)
         (h, c) = self.network.get_initial_hidden_context()
 
-
         for x_item in x_sequence[0]:
             generated_sequence.append(x_item.item())
 
