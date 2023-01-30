@@ -31,6 +31,6 @@ trainer.test()
 network.eval()
 
 # === Save model for production use ===
-(x_sequence, y_pred) = cbow_train_dataset[0:constants.BATCH_SIZE]
+(_, x_sequence, y_pred) = cbow_train_dataset[0:constants.BATCH_SIZE]
 traced_script_module = torch.jit.trace(network.forward, x_sequence.to(device))
 traced_script_module.save("result_model/cbow_network.pt")
