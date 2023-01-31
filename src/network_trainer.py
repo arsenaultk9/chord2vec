@@ -16,6 +16,7 @@ class NetworkTrainer:
                  train_data_loader: DataLoader,
                  test_data_loader: DataLoader,
                  valid_data_loader: DataLoader,
+                 total_epochs: int,
                  is_dynamic_lr_scheduler: bool):
 
         self.network = network
@@ -26,9 +27,14 @@ class NetworkTrainer:
 
         self.loss_function = nn.CrossEntropyLoss()
         self.optimizer = optim.SGD(network.parameters(), lr=0.01, momentum=0.9)
+
+        self.is_dynamic_lr_scheduler = is_dynamic_lr_scheduler
         
         if is_dynamic_lr_scheduler:
-            self.lr_scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, patience=3)
+            self.lr_scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, patience=2, verbose=True)
+        else:
+            lr_lambda = lambda epoch: (total_epochs - epoch) / total_epochs
+            self.lr_scheduler = optim.lr_scheduler.LambdaLR(self.optimizer, lr_lambda=lr_lambda, verbose=True)
 
 
     def get_loss(self, model_output, y_target):
@@ -138,7 +144,9 @@ class NetworkTrainer:
         if constants.APPLY_LR_SCHEDULER:
             self.lr_scheduler.step(average_loss)
             learning_rate = self.lr_scheduler.optimizer.param_groups[0]['lr']
-            print(f'learning_rate: {learning_rate}')
+
+            # if self.is_dynamic_lr_scheduler:
+            #     print(f'learning_rate: {learning_rate}')
 
         batch_idx = int(len(self.valid_data_loader.dataset) / constants.BATCH_SIZE)
         results_aggregator.update_plots('valid', batch_idx, epoch)
