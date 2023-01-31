@@ -15,7 +15,8 @@ class NetworkTrainer:
                  network: LstmEmbeddingNetwork,
                  train_data_loader: DataLoader,
                  test_data_loader: DataLoader,
-                 valid_data_loader: DataLoader):
+                 valid_data_loader: DataLoader,
+                 is_dynamic_lr_scheduler: bool):
 
         self.network = network
 
@@ -25,6 +26,9 @@ class NetworkTrainer:
 
         self.loss_function = nn.CrossEntropyLoss()
         self.optimizer = optim.SGD(network.parameters(), lr=0.01, momentum=0.9)
+        
+        if is_dynamic_lr_scheduler:
+            self.lr_scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, patience=3)
 
 
     def get_loss(self, model_output, y_target):
@@ -128,6 +132,13 @@ class NetworkTrainer:
                     results_aggregator.get_average_loss(batch_idx), 
                     results_aggregator.get_average_accuracy(batch_idx)
                     ))
+                
+        average_loss = results_aggregator.get_average_loss(len(self.valid_data_loader.dataset))
+                
+        if constants.APPLY_LR_SCHEDULER:
+            self.lr_scheduler.step(average_loss)
+            learning_rate = self.lr_scheduler.optimizer.param_groups[0]['lr']
+            print(f'learning_rate: {learning_rate}')
 
         batch_idx = int(len(self.valid_data_loader.dataset) / constants.BATCH_SIZE)
         results_aggregator.update_plots('valid', batch_idx, epoch)

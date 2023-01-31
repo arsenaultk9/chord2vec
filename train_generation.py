@@ -1,5 +1,7 @@
 import random
 import torch
+import torch.optim as optim
+
 from torch.utils.data import DataLoader
 
 import src.midi_generator as midi_generator
@@ -25,8 +27,8 @@ test_data_loader = DataLoader(test_dataset, constants.BATCH_SIZE, constants.SHUF
 embedding_model = torch.load(f"result_model/cbow_network.pt", map_location=device)
 embedding_weigths = list(embedding_model.parameters())[0]
 
-network = LstmVanillaNetwork(len(vocabulary.suffixes_to_indexes.values()), embedding_weigths).to(device)
-trainer = NetworkTrainer(network, train_data_loader, valid_data_loader, test_data_loader)
+network = LstmEmbeddingNetwork(len(vocabulary.suffixes_to_indexes.values()), embedding_weigths).to(device)
+trainer = NetworkTrainer(network, train_data_loader, valid_data_loader, test_data_loader, is_dynamic_lr_scheduler=True)
 
 for epoch in range(1, constants.GENERATION_EPOCHS + 1):
     trainer.epoch_train(epoch)
