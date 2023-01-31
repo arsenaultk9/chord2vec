@@ -2,7 +2,7 @@
 2. Propagate lstm hidden cell for generation.                                       -> OK
 3. Better lstm model architectures.                                                 -> Will not do
 4. Use personnal collection midi instead of LAHK for music generation_data_loader   -> OK
-5. Learning rate scheduler                                                          ->
+5. Learning rate scheduler                                                          -> OK
 6. Change skipgram to output other chords instead of a single chord                 -> Will not do
 7. Fix Accuracy for skip gram                                                       -> Will not do
 8. Data augmentation with scale augmentation                                        -> Will not do
