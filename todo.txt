@@ -5,6 +5,7 @@
 5. Learning rate scheduler                                                          -> OK
 6. Change skipgram to output other chords instead of a single chord                 -> Will not do
 7. Fix Accuracy for skip gram                                                       -> Will not do
-8. Data augmentation with scale augmentation                                        -> Will not do
+8. Data augmentation with scale augmentation                                        -> 
 9. Experiment with vector add/substract of embeddings                               -> OK
-10. Write medium article                                                            ->
+10. Experiment sklearning instead of deep learning                                  ->
+11. Write medium article                                                            ->
