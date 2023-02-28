@@ -1,8 +1,5 @@
-import random
-import torch
-import torch.optim as optim
-
-from torch.utils.data import DataLoader
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
 import src.midi_generator as midi_generator
 import src.note_generator as note_generator
@@ -14,10 +11,26 @@ from src.networks.lstm_vanilla_network import LstmVanillaNetwork
 from src.network_trainer import NetworkTrainer
 from src.network_sequence_generator import NetworkSequenceGenerator
 
+print('data loading')
 vocabulary, X_train, y_train, X_test, y_test = load_random_forest_data()
 
 # train
-print(len(X_train))
+print('train')
+
+rf_classifier = RandomForestClassifier(n_estimators=100, min_samples_split=8)
+rf_classifier.fit(X_train, y_train)
+
+# eval
+print('eval')
+
+train_y_pred = rf_classifier.predict(X_train)
+train_score = accuracy_score(y_train, train_y_pred)
+
+test_y_pred = rf_classifier.predict(X_test)
+val_score = accuracy_score(y_test, test_y_pred)
+
+print(f'train accuracy: {train_score}')
+print(f'validation accuracy: {val_score}')
 
 # # === Save model for production use ===
 # (_, x_sequence, y_pred) = train_dataset[0:constants.BATCH_SIZE]
