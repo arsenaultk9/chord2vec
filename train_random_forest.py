@@ -1,3 +1,5 @@
+import random
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
@@ -6,10 +8,6 @@ import src.note_generator as note_generator
 import src.constants as constants
 
 from src.generation_data_loader import load_random_forest_data
-from src.networks.lstm_embedding_network import LstmEmbeddingNetwork
-from src.networks.lstm_vanilla_network import LstmVanillaNetwork
-from src.network_trainer import NetworkTrainer
-from src.network_sequence_generator import NetworkSequenceGenerator
 
 print('data loading')
 vocabulary, X_train, y_train, X_test, y_test = load_random_forest_data()
@@ -39,16 +37,31 @@ print(f'validation accuracy: {val_score}')
 # traced_script_module = torch.jit.trace(network.forward, (x_sequence.to(device), (h, c)))
 # traced_script_module.save("result_model/generation_network.pt")
 
-# # ==== Code to generate to midi. ====
-# random_seeds = random.sample(range(0, len(test_dataset) - constants.BATCH_SIZE), 9)
+# ==== Code to generate to midi. ====
+random_seeds = random.sample(range(0, len(X_test)), 9)
 
-# for file_index, song_index in enumerate(random_seeds):
-#     print(f'Generating song {file_index + 1}')
 
-#     sequence_generator = NetworkSequenceGenerator(network)
-#     (_, x_sequence, y_pred) = test_dataset[song_index:song_index+constants.BATCH_SIZE]
+def generate_sequence(primer_sequence):
+    # avoir mutating two lists at same time
+    generated_sequence = list(primer_sequence)
 
-#     generated_sequence = sequence_generator.generate_sequence(x_sequence)
+    for _ in range(constants.SEQUENCE_GENERATION_LENGTH):
+        y_pred = rf_classifier.predict([primer_sequence]).tolist()
 
-#     generated_note_infos = note_generator.generate_note_info(generated_sequence, vocabulary)
-#     midi_generator.generate_midi(f'generated_file{file_index}.mid', generated_note_infos)
+        generated_sequence += y_pred
+        primer_sequence = primer_sequence[1:] + y_pred
+
+    return generated_sequence
+
+
+for file_index, song_index in enumerate(random_seeds):
+    print(f'Generating song {file_index + 1}')
+
+    x_sequence = X_test[song_index]
+
+    generated_sequence = generate_sequence(x_sequence)
+
+    generated_note_infos = note_generator.generate_note_info(
+        generated_sequence, vocabulary)
+    midi_generator.generate_midi(
+        f'generated_file{file_index}.mid', generated_note_infos)
