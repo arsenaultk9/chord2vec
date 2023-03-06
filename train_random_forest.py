@@ -17,6 +17,22 @@ device = torch.device("cuda" if use_cuda else "cpu")
 print('data loading')
 vocabulary, X_train, y_train, X_test, y_test = load_random_forest_data()
 
+# Shuffle data
+X_train = X_train + X_test
+y_train = y_train + y_test
+
+temp = list(zip(X_train, y_train))
+random.shuffle(temp)
+X_train, y_train = zip(*temp)
+
+X_train, y_train = list(X_train), list(y_train)
+
+all_data_lenght = len(X_train)
+test_split = all_data_lenght - int((all_data_lenght * 0.20))
+
+X_train, X_test = X_train[0:test_split], X_train[test_split:all_data_lenght]
+y_train, y_test = y_train[0:test_split], y_train[test_split:all_data_lenght]
+
 # Use embeddings instead of class values
 embedding_model = torch.load(f"result_model/cbow_network.pt", map_location=device)
 embedding_weigths = list(embedding_model.parameters())[0]
