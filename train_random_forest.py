@@ -1,4 +1,6 @@
 import random
+import torch
+import torch.nn as nn
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
@@ -9,8 +11,27 @@ import src.constants as constants
 
 from src.generation_data_loader import load_random_forest_data
 
+use_cuda = torch.cuda.is_available()
+device = torch.device("cuda" if use_cuda else "cpu")
+
 print('data loading')
 vocabulary, X_train, y_train, X_test, y_test = load_random_forest_data()
+
+# Use embeddings instead of class values
+embedding_model = torch.load(f"result_model/cbow_network.pt", map_location=device)
+embedding_weigths = list(embedding_model.parameters())[0]
+
+embeddings = nn.Embedding.from_pretrained(embedding_weigths)
+
+def get_embedded(X, Y):
+    X_train_embed = torch.tensor(X, dtype=torch.long, device=device)
+    X_train_embed = embeddings(X_train_embed).cpu().detach().numpy()
+    X_train_embed = X_train_embed.reshape(len(Y), constants.EMBED_DIMENSION * (constants.INPUT_LENGTH - 1))
+
+    return X_train_embed
+
+X_train = get_embedded(X_train, y_train)
+X_test = get_embedded(X_test, y_test)
 
 # train
 print('train')
@@ -41,27 +62,27 @@ print(f'validation accuracy: {val_score}')
 random_seeds = random.sample(range(0, len(X_test)), 9)
 
 
-def generate_sequence(primer_sequence):
-    # avoir mutating two lists at same time
-    generated_sequence = list(primer_sequence)
+# def generate_sequence(primer_sequence):
+#     # avoir mutating two lists at same time
+#     generated_sequence = list(primer_sequence)
 
-    for _ in range(constants.SEQUENCE_GENERATION_LENGTH):
-        y_pred = rf_classifier.predict([primer_sequence]).tolist()
+#     for _ in range(constants.SEQUENCE_GENERATION_LENGTH):
+#         y_pred = rf_classifier.predict([primer_sequence]).tolist()
 
-        generated_sequence += y_pred
-        primer_sequence = primer_sequence[1:] + y_pred
+#         generated_sequence += y_pred
+#         primer_sequence = primer_sequence[1:] + y_pred
 
-    return generated_sequence
+#     return generated_sequence
 
 
-for file_index, song_index in enumerate(random_seeds):
-    print(f'Generating song {file_index + 1}')
+# for file_index, song_index in enumerate(random_seeds):
+#     print(f'Generating song {file_index + 1}')
 
-    x_sequence = X_test[song_index]
+#     x_sequence = X_test[song_index]
 
-    generated_sequence = generate_sequence(x_sequence)
+#     generated_sequence = generate_sequence(x_sequence)
 
-    generated_note_infos = note_generator.generate_note_info(
-        generated_sequence, vocabulary)
-    midi_generator.generate_midi(
-        f'generated_file{file_index}.mid', generated_note_infos)
+#     generated_note_infos = note_generator.generate_note_info(
+#         generated_sequence, vocabulary)
+#     midi_generator.generate_midi(
+#         f'generated_file{file_index}.mid', generated_note_infos)
