@@ -30,7 +30,7 @@ for index, file_name in enumerate(file_names):
 
 chords_vocabulary = build_chords_vocab()
 all_data = get_training_data(all_song_chords, chords_vocabulary)
-all_data = augment_training_data(all_data)
+all_data = augment_training_data(all_data, chords_vocabulary)
 
 all_data_lenght = len(all_data)
 test_split = all_data_lenght - int((all_data_lenght * 0.10))

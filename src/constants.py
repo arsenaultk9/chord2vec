@@ -27,4 +27,5 @@ EMBEDDING_TRAINING_DATA_PATH = './data/training_data.pkl'
 GENERATION_TRAINING_DATA_PATH = './data/training_data_small.pkl'
 
 # Data augmentation
-APPLY_SCALE_AUGMENTATION = False
+APPLY_DATA_AUGMENTATION = True
+DATA_AUGMENTATION_COUNT = 4
