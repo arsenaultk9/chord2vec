@@ -7,6 +7,7 @@ import src.constants as constants
 
 from src.models.chords_vocab_builder import build_chords_vocab
 from src.training_data_preparator import get_training_data
+from src.training_data_augmenter import augment_training_data
 
 
 directory = 'C:/dev/data/KafkaSongs - Midi Files Personal/'
@@ -29,6 +30,7 @@ for index, file_name in enumerate(file_names):
 
 chords_vocabulary = build_chords_vocab()
 all_data = get_training_data(all_song_chords, chords_vocabulary)
+all_data = augment_training_data(all_data)
 
 all_data_lenght = len(all_data)
 test_split = all_data_lenght - int((all_data_lenght * 0.10))
