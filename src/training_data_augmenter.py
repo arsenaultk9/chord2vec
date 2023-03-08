@@ -44,7 +44,7 @@ def get_best_augmentations(song_augmentations: Dict[int, List[int]], chord_count
         song_augmentation_scores[augmentation_index] = score
 
     # Get augmentations that have the least occurence in chord_counts
-    for augmentation_index, score in sorted(song_augmentation_scores.items(), key=lambda item: item[1]):
+    for augmentation_index, _ in sorted(song_augmentation_scores.items(), key=lambda item: item[1]):
         if(len(best_augmentations) >= constants.DATA_AUGMENTATION_COUNT):
             break
 
