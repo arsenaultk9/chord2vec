@@ -18,13 +18,15 @@ GENERATION_EPOCHS = 16
 
 BATCH_SIZE = 1
 
-SHUFFLE_DATA = False
 APPLY_LR_SCHEDULER = True
 
 SEQUENCE_GENERATION_LENGTH = 18
 
 EMBEDDING_TRAINING_DATA_PATH = './data/training_data.pkl'
-GENERATION_TRAINING_DATA_PATH = './data/training_data_small.pkl'
+GENERATION_TRAINING_DATA_PATH = './data/training_data_generation_augmented.pkl'
+
+SHUFFLE_DATA_RANDOM_FOREST = True
+EMBED_DATA_RANDOM_FOREST = True
 
 # Data augmentation
 APPLY_DATA_AUGMENTATION = True
