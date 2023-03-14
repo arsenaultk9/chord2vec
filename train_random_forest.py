@@ -80,27 +80,27 @@ print(f'validation accuracy: {val_score}')
 random_seeds = random.sample(range(0, len(X_test)), 9)
 
 
-# def generate_sequence(primer_sequence):
-#     # avoir mutating two lists at same time
-#     generated_sequence = list(primer_sequence)
+def generate_sequence(primer_sequence):
+    # avoir mutating two lists at same time
+    generated_sequence = list(primer_sequence)
 
-#     for _ in range(constants.SEQUENCE_GENERATION_LENGTH):
-#         y_pred = rf_classifier.predict([primer_sequence]).tolist()
+    for _ in range(constants.SEQUENCE_GENERATION_LENGTH):
+        y_pred = rf_classifier.predict([primer_sequence]).tolist()
 
-#         generated_sequence += y_pred
-#         primer_sequence = primer_sequence[1:] + y_pred
+        generated_sequence += y_pred
+        primer_sequence = primer_sequence[1:] + y_pred
 
-#     return generated_sequence
+    return generated_sequence
 
 
-# for file_index, song_index in enumerate(random_seeds):
-#     print(f'Generating song {file_index + 1}')
+for file_index, song_index in enumerate(random_seeds):
+    print(f'Generating song {file_index + 1}')
 
-#     x_sequence = X_test[song_index]
+    x_sequence = X_test[song_index]
 
-#     generated_sequence = generate_sequence(x_sequence)
+    generated_sequence = generate_sequence(x_sequence)
 
-#     generated_note_infos = note_generator.generate_note_info(
-#         generated_sequence, vocabulary)
-#     midi_generator.generate_midi(
-#         f'generated_file{file_index}.mid', generated_note_infos)
+    generated_note_infos = note_generator.generate_note_info(
+        generated_sequence, vocabulary)
+    midi_generator.generate_midi(
+        f'generated_file{file_index}.mid', generated_note_infos)

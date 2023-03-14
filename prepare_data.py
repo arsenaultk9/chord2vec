@@ -13,7 +13,7 @@ from src.training_data_augmenter import augment_training_data
 directory = 'C:/dev/data/KafkaSongs - Midi Files Personal/'
 
 file_names = listdir(directory)
-file_names = file_names
+file_names = file_names[0:27]
 
 all_song_chords = []
 
