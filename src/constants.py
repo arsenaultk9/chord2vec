@@ -26,7 +26,7 @@ EMBEDDING_TRAINING_DATA_PATH = './data/training_data.pkl'
 GENERATION_TRAINING_DATA_PATH = './data/training_data_small.pkl'
 
 SHUFFLE_DATA_RANDOM_FOREST = True
-EMBED_DATA_RANDOM_FOREST = False
+EMBED_DATA_RANDOM_FOREST = True
 
 # Data augmentation
 APPLY_DATA_AUGMENTATION = True

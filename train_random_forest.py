@@ -45,11 +45,14 @@ def get_embedded(X, Y):
     X_train_embed = embeddings(X_train_embed).cpu().detach().numpy()
     X_train_embed = X_train_embed.reshape(len(Y), constants.EMBED_DIMENSION * (constants.INPUT_LENGTH - 1))
 
-    return X_train_embed
+    return X_train_embed, X
 
 if constants.EMBED_DATA_RANDOM_FOREST:
-    X_train = get_embedded(X_train, y_train)
-    X_test = get_embedded(X_test, y_test)
+    X_train, X_original = get_embedded(X_train, y_train)
+    X_test, X_test_original = get_embedded(X_test, y_test)
+else:
+    X_original = X_train
+    X_test_original = X_test
 
 # train
 print('train')
@@ -77,28 +80,35 @@ print(f'validation accuracy: {val_score}')
 # traced_script_module.save("result_model/generation_network.pt")
 
 # ==== Code to generate to midi. ====
-random_seeds = random.sample(range(0, len(X_test)), 9)
 
-
-def generate_sequence(primer_sequence):
+def generate_sequence(primer_sequence, primer_sequence_embed):
     # avoir mutating two lists at same time
     generated_sequence = list(primer_sequence)
 
     for _ in range(constants.SEQUENCE_GENERATION_LENGTH):
-        y_pred = rf_classifier.predict([primer_sequence]).tolist()
+        y_pred = rf_classifier.predict([primer_sequence_embed]).tolist()
 
         generated_sequence += y_pred
         primer_sequence = primer_sequence[1:] + y_pred
 
+        if not constants.EMBED_DATA_RANDOM_FOREST:
+            primer_sequence_embed = primer_sequence
+            continue
+
+        primer_sequence_embed, _ = get_embedded(primer_sequence, [_]) # y is only used for batch size of 1 for inference.
+        primer_sequence_embed = primer_sequence_embed[0]
+
     return generated_sequence
 
+random_seeds = random.sample(range(0, len(X_test)), 9)
 
 for file_index, song_index in enumerate(random_seeds):
     print(f'Generating song {file_index + 1}')
 
-    x_sequence = X_test[song_index]
+    x_sequence = X_test_original[song_index]
+    x_sequence_embed = X_test[song_index]
 
-    generated_sequence = generate_sequence(x_sequence)
+    generated_sequence = generate_sequence(x_sequence, x_sequence_embed)
 
     generated_note_infos = note_generator.generate_note_info(
         generated_sequence, vocabulary)
