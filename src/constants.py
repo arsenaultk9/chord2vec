@@ -22,8 +22,8 @@ APPLY_LR_SCHEDULER = True
 
 SEQUENCE_GENERATION_LENGTH = 18
 
-EMBEDDING_TRAINING_DATA_PATH = './data/training_data_augmented.pkl'
-GENERATION_TRAINING_DATA_PATH = './data/training_data_small_augmented.pkl'
+EMBEDDING_TRAINING_DATA_PATH = './data/training_data.pkl'
+GENERATION_TRAINING_DATA_PATH = './data/training_data_small.pkl'
 
 SHUFFLE_DATA = False # ignore this as it's not well implemented in LSTM and embedding networks.
 
