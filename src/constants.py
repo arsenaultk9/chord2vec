@@ -2,7 +2,7 @@ LOG_TENSORBOARD = True
 
 INPUT_LENGTH = 5
 MIDDLE_INPUT = 2
-WINDOW_SLIDE_RANGE = 1
+WINDOW_SLIDE_RANGE = 5
 
 EMBED_DIMENSION = 25
 EMBED_MAX_NORM = 1
@@ -24,6 +24,8 @@ SEQUENCE_GENERATION_LENGTH = 18
 
 EMBEDDING_TRAINING_DATA_PATH = './data/training_data_augmented.pkl'
 GENERATION_TRAINING_DATA_PATH = './data/training_data_small_augmented.pkl'
+
+SHUFFLE_DATA = False # ignore this as it's not well implemented in LSTM and embedding networks.
 
 SHUFFLE_DATA_RANDOM_FOREST = True
 EMBED_DATA_RANDOM_FOREST = True
