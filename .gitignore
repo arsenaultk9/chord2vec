@@ -132,3 +132,6 @@ dmypy.json
 midi
 runs
 result_model
+
+# Excel
+~$results.xlsx
