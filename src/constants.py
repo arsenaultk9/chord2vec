@@ -22,7 +22,7 @@ APPLY_LR_SCHEDULER = True
 
 SEQUENCE_GENERATION_LENGTH = 18
 
-EMBEDDING_TRAINING_DATA_PATH = './data/training_data.pkl'
+EMBEDDING_TRAINING_DATA_PATH = './data/training_data_augmented.pkl'
 GENERATION_TRAINING_DATA_PATH = './data/training_data_small.pkl'
 
 SHUFFLE_DATA_RANDOM_FOREST = True
