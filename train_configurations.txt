@@ -1,5 +1,7 @@
 1. Best embedding with data augmentation.
 
+Before lstm: validate window slide size.
+
 for small, medium, large data sets
     2. LSTM (Keep cell state of not?)
         a) Embedding
