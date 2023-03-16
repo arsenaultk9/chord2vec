@@ -25,6 +25,8 @@ SEQUENCE_GENERATION_LENGTH = 18
 EMBEDDING_TRAINING_DATA_PATH = './data/training_data.pkl'
 GENERATION_TRAINING_DATA_PATH = './data/training_data_small.pkl'
 
+EMBEDDING_MODEL_PATH = "result_model/cbow_network.pt"
+
 SHUFFLE_DATA = False # ignore this as it's not well implemented in LSTM and embedding networks.
 
 SHUFFLE_DATA_RANDOM_FOREST = True

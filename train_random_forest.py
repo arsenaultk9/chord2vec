@@ -35,7 +35,7 @@ if constants.SHUFFLE_DATA_RANDOM_FOREST:
     y_train, y_test = y_train[0:test_split], y_train[test_split:all_data_lenght]
 
 # Use embeddings instead of class values
-embedding_model = torch.load(f"result_model/cbow_network.pt", map_location=device)
+embedding_model = torch.load(constants.EMBEDDING_MODEL_PATH, map_location=device)
 embedding_weigths = list(embedding_model.parameters())[0]
 
 embeddings = nn.Embedding.from_pretrained(embedding_weigths)

@@ -35,4 +35,4 @@ network.eval()
 (h, c) = network.get_initial_hidden_context()
 
 traced_script_module = torch.jit.trace(network.forward, (x_sequence.to(device), (h, c)))
-traced_script_module.save("result_model/cbow_network.pt")
+traced_script_module.save(constants.EMBEDDING_MODEL_PATH)

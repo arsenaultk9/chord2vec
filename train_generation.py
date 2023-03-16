@@ -24,7 +24,7 @@ train_data_loader = DataLoader(train_dataset, constants.BATCH_SIZE, constants.SH
 valid_data_loader = DataLoader(valid_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 test_data_loader = DataLoader(test_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 
-embedding_model = torch.load(f"result_model/cbow_network.pt", map_location=device)
+embedding_model = torch.load(constants.EMBEDDING_MODEL_PATH, map_location=device)
 embedding_weigths = list(embedding_model.parameters())[0]
 
 network = LstmEmbeddingNetwork(len(vocabulary.suffixes_to_indexes.values()), embedding_weigths).to(device)
