@@ -13,7 +13,7 @@ from src.training_data_augmenter import augment_training_data
 directory = 'C:\dev\data\KafkaSongs-mer., janv. 18, 2023/'
 
 file_names = listdir(directory)
-file_names = file_names
+file_names = file_names[0:27]
 
 all_song_chords = []
 
@@ -48,5 +48,5 @@ data = {
 }
 
 # Store data (serialize)
-with open(constants.EMBEDDING_TRAINING_DATA_PATH, 'wb') as handle:
+with open(constants.PREPARE_DATA_PATH, 'wb') as handle:
     pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)
