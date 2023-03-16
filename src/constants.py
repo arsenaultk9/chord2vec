@@ -23,9 +23,9 @@ APPLY_LR_SCHEDULER = True
 SEQUENCE_GENERATION_LENGTH = 18
 
 EMBEDDING_TRAINING_DATA_PATH = './data/training_data_augmented.pkl'
-GENERATION_TRAINING_DATA_PATH = './data/training_data_small.pkl'
+GENERATION_TRAINING_DATA_PATH = './data/training_data_generation_augmented.pkl'
 
-EMBEDDING_MODEL_PATH = "result_model/cbow_network_augmented.pt"
+EMBEDDING_MODEL_PATH =  'result_model/cbow_network.pt' #'result_model/cbow_network_augmented.pt'
 
 SHUFFLE_DATA = False # ignore this as it's not well implemented in LSTM and embedding networks.
 
