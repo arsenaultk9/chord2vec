@@ -7,7 +7,7 @@ from src.models.cbow_dataset import CbowDataset
 from src.models.skipgram_dataset import SkipgramDataset
 
 def load_data():
-    with open(get_params().EMBEDDING_TRAINING_DATA_PATH, 'rb') as file:
+    with open(get_params().embedding_training_data_path, 'rb') as file:
         return pickle.load(file, encoding="latin1")
 
 

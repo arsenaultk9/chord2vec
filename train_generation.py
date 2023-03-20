@@ -25,7 +25,7 @@ train_data_loader = DataLoader(train_dataset, constants.BATCH_SIZE, constants.SH
 valid_data_loader = DataLoader(valid_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 test_data_loader = DataLoader(test_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 
-embedding_model = torch.load(get_params().EMBEDDING_MODEL_PATH, map_location=device)
+embedding_model = torch.load(get_params().embedding_model_path, map_location=device)
 embedding_weigths = list(embedding_model.parameters())[0]
 
 network = LstmVanillaNetwork(len(vocabulary.suffixes_to_indexes.values()), embedding_weigths).to(device)

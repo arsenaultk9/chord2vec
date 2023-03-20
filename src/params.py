@@ -1,21 +1,21 @@
 class Params:
     def __init__(self,
-                 WINDOW_SLIDE_RANGE,
-                 EMBEDDING_TRAINING_DATA_PATH,
-                 GENERATION_TRAINING_DATA_PATH,
-                 EMBEDDING_MODEL_PATH,
-                 SHUFFLE_DATA_RANDOM_FOREST,
-                 EMBED_DATA_RANDOM_FOREST):
-        self.WINDOW_SLIDE_RANGE = WINDOW_SLIDE_RANGE
-        self.EMBEDDING_TRAINING_DATA_PATH = EMBEDDING_TRAINING_DATA_PATH
-        self.GENERATION_TRAINING_DATA_PATH = GENERATION_TRAINING_DATA_PATH
-        self.EMBEDDING_MODEL_PATH = EMBEDDING_MODEL_PATH
-        self.SHUFFLE_DATA_RANDOM_FOREST = SHUFFLE_DATA_RANDOM_FOREST
-        self.EMBED_DATA_RANDOM_FOREST = EMBED_DATA_RANDOM_FOREST
+                 window_slide_range = 1,
+                 embedding_training_data_path = './data/training_data.pkl',
+                 generation_training_data_path = './data/training_data_small.pkl',
+                 embedding_model_path = 'result_model/cbow_network.pt',
+                 shuffle_data_random_forest = True,
+                 embed_data_random_forest= True):
+        self.window_slide_range = window_slide_range
+        self.embedding_training_data_path = embedding_training_data_path
+        self.generation_training_data_path = generation_training_data_path
+        self.embedding_model_path = embedding_model_path
+        self.shuffle_data_random_forest = shuffle_data_random_forest
+        self.embed_data_random_forest = embed_data_random_forest
 
 
 global params
-params = Params(1, './data/training_data.pkl', './data/training_data_small.pkl', 'result_model/cbow_network.pt', True, True)
+params = Params()
 
 
 def set_params(new_params: Params):

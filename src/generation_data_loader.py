@@ -8,7 +8,7 @@ from src.generation_dataset_builder import get_input_and_targets
 
 
 def load_data():
-    with open(get_params().GENERATION_TRAINING_DATA_PATH, 'rb') as file:
+    with open(get_params().generation_training_data_path, 'rb') as file:
         return pickle.load(file, encoding="latin1")
 
 
