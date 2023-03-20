@@ -9,109 +9,118 @@ import src.midi_generator as midi_generator
 import src.note_generator as note_generator
 import src.constants as constants
 
-from src.params import get_params
+from src.params import get_params, set_params, Params
 from src.generation_data_loader import load_random_forest_data
 
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 
-print('data loading')
-vocabulary, X_train, y_train, X_test, y_test = load_random_forest_data()
+def train_random_forest(params: Params):
+    set_params(params)
 
-# Shuffle data
-if get_params().shuffle_data_random_forest:
-    X_train = X_train + X_test
-    y_train = y_train + y_test
+    print('data loading')
+    vocabulary, X_train, y_train, X_test, y_test = load_random_forest_data()
 
-    temp = list(zip(X_train, y_train))
-    random.shuffle(temp)
-    X_train, y_train = zip(*temp)
+    # Shuffle data
+    if get_params().shuffle_data_random_forest:
+        X_train = X_train + X_test
+        y_train = y_train + y_test
 
-    X_train, y_train = list(X_train), list(y_train)
+        temp = list(zip(X_train, y_train))
+        random.shuffle(temp)
+        X_train, y_train = zip(*temp)
 
-    all_data_lenght = len(X_train)
-    test_split = all_data_lenght - int((all_data_lenght * 0.20))
+        X_train, y_train = list(X_train), list(y_train)
 
-    X_train, X_test = X_train[0:test_split], X_train[test_split:all_data_lenght]
-    y_train, y_test = y_train[0:test_split], y_train[test_split:all_data_lenght]
+        all_data_lenght = len(X_train)
+        test_split = all_data_lenght - int((all_data_lenght * 0.20))
 
-# Use embeddings instead of class values
-embedding_model = torch.load(get_params().embedding_model_path, map_location=device)
-embedding_weigths = list(embedding_model.parameters())[0]
+        X_train, X_test = X_train[0:test_split], X_train[test_split:all_data_lenght]
+        y_train, y_test = y_train[0:test_split], y_train[test_split:all_data_lenght]
 
-embeddings = nn.Embedding.from_pretrained(embedding_weigths)
+    # Use embeddings instead of class values
+    embedding_model = torch.load(get_params().embedding_model_path, map_location=device)
+    embedding_weigths = list(embedding_model.parameters())[0]
 
-def get_embedded(X, Y):
-    X_train_embed = torch.tensor(X, dtype=torch.long, device=device)
-    X_train_embed = embeddings(X_train_embed).cpu().detach().numpy()
-    X_train_embed = X_train_embed.reshape(len(Y), constants.EMBED_DIMENSION * (constants.INPUT_LENGTH - 1))
+    embeddings = nn.Embedding.from_pretrained(embedding_weigths)
 
-    return X_train_embed, X
+    def get_embedded(X, Y):
+        X_train_embed = torch.tensor(X, dtype=torch.long, device=device)
+        X_train_embed = embeddings(X_train_embed).cpu().detach().numpy()
+        X_train_embed = X_train_embed.reshape(len(Y), constants.EMBED_DIMENSION * (constants.INPUT_LENGTH - 1))
 
-if get_params().embed_data_random_forest:
-    X_train, X_original = get_embedded(X_train, y_train)
-    X_test, X_test_original = get_embedded(X_test, y_test)
-else:
-    X_original = X_train
-    X_test_original = X_test
+        return X_train_embed, X
 
-# train
-print('train')
+    if get_params().embed_data_random_forest:
+        X_train, X_original = get_embedded(X_train, y_train)
+        X_test, X_test_original = get_embedded(X_test, y_test)
+    else:
+        X_original = X_train
+        X_test_original = X_test
 
-rf_classifier = RandomForestClassifier(n_estimators=100, min_samples_split=8)
-rf_classifier.fit(X_train, y_train)
+    # train
+    print('train')
 
-# eval
-print('eval')
+    rf_classifier = RandomForestClassifier(n_estimators=100, min_samples_split=8)
+    rf_classifier.fit(X_train, y_train)
 
-train_y_pred = rf_classifier.predict(X_train)
-train_score = accuracy_score(y_train, train_y_pred)
+    # eval
+    print('eval')
 
-test_y_pred = rf_classifier.predict(X_test)
-val_score = accuracy_score(y_test, test_y_pred)
+    train_y_pred = rf_classifier.predict(X_train)
+    train_score = accuracy_score(y_train, train_y_pred)
 
-print(f'train accuracy: {train_score}')
-print(f'validation accuracy: {val_score}')
+    test_y_pred = rf_classifier.predict(X_test)
+    val_score = accuracy_score(y_test, test_y_pred)
 
-# # === Save model for production use ===
-# (_, x_sequence, y_pred) = train_dataset[0:constants.BATCH_SIZE]
-# (h, c) = network.get_initial_hidden_context()
+    print(f'train accuracy: {train_score}')
+    print(f'validation accuracy: {val_score}')
 
-# traced_script_module = torch.jit.trace(network.forward, (x_sequence.to(device), (h, c)))
-# traced_script_module.save("result_model/generation_network.pt")
+    # # === Save model for production use ===
+    # (_, x_sequence, y_pred) = train_dataset[0:constants.BATCH_SIZE]
+    # (h, c) = network.get_initial_hidden_context()
 
-# ==== Code to generate to midi. ====
+    # traced_script_module = torch.jit.trace(network.forward, (x_sequence.to(device), (h, c)))
+    # traced_script_module.save("result_model/generation_network.pt")
 
-def generate_sequence(primer_sequence, primer_sequence_embed):
-    # avoir mutating two lists at same time
-    generated_sequence = list(primer_sequence)
+    # ==== Code to generate to midi. ====
 
-    for _ in range(constants.SEQUENCE_GENERATION_LENGTH):
-        y_pred = rf_classifier.predict([primer_sequence_embed]).tolist()
+    def generate_sequence(primer_sequence, primer_sequence_embed):
+        # avoir mutating two lists at same time
+        generated_sequence = list(primer_sequence)
 
-        generated_sequence += y_pred
-        primer_sequence = primer_sequence[1:] + y_pred
+        for _ in range(constants.SEQUENCE_GENERATION_LENGTH):
+            y_pred = rf_classifier.predict([primer_sequence_embed]).tolist()
 
-        if not get_params().embed_data_random_forest:
-            primer_sequence_embed = primer_sequence
-            continue
+            generated_sequence += y_pred
+            primer_sequence = primer_sequence[1:] + y_pred
 
-        primer_sequence_embed, _ = get_embedded(primer_sequence, [_]) # y is only used for batch size of 1 for inference.
-        primer_sequence_embed = primer_sequence_embed[0]
+            if not get_params().embed_data_random_forest:
+                primer_sequence_embed = primer_sequence
+                continue
 
-    return generated_sequence
+            primer_sequence_embed, _ = get_embedded(primer_sequence, [_]) # y is only used for batch size of 1 for inference.
+            primer_sequence_embed = primer_sequence_embed[0]
 
-random_seeds = random.sample(range(0, len(X_test)), 9)
+        return generated_sequence
 
-for file_index, song_index in enumerate(random_seeds):
-    print(f'Generating song {file_index + 1}')
+    random_seeds = random.sample(range(0, len(X_test)), 9)
 
-    x_sequence = X_test_original[song_index]
-    x_sequence_embed = X_test[song_index]
+    for file_index, song_index in enumerate(random_seeds):
+        print(f'Generating song {file_index + 1}')
 
-    generated_sequence = generate_sequence(x_sequence, x_sequence_embed)
+        x_sequence = X_test_original[song_index]
+        x_sequence_embed = X_test[song_index]
 
-    generated_note_infos = note_generator.generate_note_info(
-        generated_sequence, vocabulary)
-    midi_generator.generate_midi(
-        f'generated_file{file_index}.mid', generated_note_infos)
+        generated_sequence = generate_sequence(x_sequence, x_sequence_embed)
+
+        generated_note_infos = note_generator.generate_note_info(
+            generated_sequence, vocabulary)
+        midi_generator.generate_midi(
+            f'generated_file{file_index}.mid', generated_note_infos)
+        
+
+    return val_score
+
+if __name__ == "__main__":
+    train_random_forest(get_params())

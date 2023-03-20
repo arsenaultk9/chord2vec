@@ -189,3 +189,5 @@ class NetworkTrainer:
             results_aggregator.get_average_loss(current_item), 
             results_aggregator.get_average_accuracy(current_item)
             ))
+        
+        return results_aggregator.get_average_accuracy(current_item)
