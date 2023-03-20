@@ -2,12 +2,13 @@ import pickle
 
 import src.constants as constants
 
+from src.params import get_params
 from src.models.generation_dataset import GenerationDataset
 from src.generation_dataset_builder import get_input_and_targets
 
 
 def load_data():
-    with open(constants.GENERATION_TRAINING_DATA_PATH, 'rb') as file:
+    with open(get_params().GENERATION_TRAINING_DATA_PATH, 'rb') as file:
         return pickle.load(file, encoding="latin1")
 
 

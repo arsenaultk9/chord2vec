@@ -4,6 +4,7 @@ import numpy as np
 import torch
 
 import src.constants as constants
+from src.params import get_params
 
 def get_input_and_targets(sequences: List[List[int]]):
     song_indexes = []
@@ -11,7 +12,7 @@ def get_input_and_targets(sequences: List[List[int]]):
     Ys = []
 
     for song_index, song in enumerate(sequences):
-        for start_pos in range(0, len(song) - constants.INPUT_LENGTH - 1, constants.WINDOW_SLIDE_RANGE):
+        for start_pos in range(0, len(song) - constants.INPUT_LENGTH - 1, get_params.WINDOW_SLIDE_RANGE):
             song_indexes.append(song_index)
 
             input_end_pos = start_pos + constants.INPUT_LENGTH

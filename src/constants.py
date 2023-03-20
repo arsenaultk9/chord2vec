@@ -2,7 +2,6 @@ LOG_TENSORBOARD = False
 
 INPUT_LENGTH = 5
 MIDDLE_INPUT = 2
-WINDOW_SLIDE_RANGE = 5
 
 EMBED_DIMENSION = 25
 EMBED_MAX_NORM = 1
@@ -22,16 +21,9 @@ APPLY_LR_SCHEDULER = True
 
 SEQUENCE_GENERATION_LENGTH = 18
 
-EMBEDDING_TRAINING_DATA_PATH = './data/training_data.pkl'
-GENERATION_TRAINING_DATA_PATH = './data/training_data_small_augmented.pkl'
-
-EMBEDDING_MODEL_PATH =  'result_model/cbow_network.pt' #'result_model/cbow_network_augmented.pt'
 PREPARE_DATA_PATH = './data/training_data_small_augmented.pkl'
 
 SHUFFLE_DATA = False # ignore this as it's not well implemented in LSTM and embedding networks.
-
-SHUFFLE_DATA_RANDOM_FOREST = True
-EMBED_DATA_RANDOM_FOREST = True
 
 # Data augmentation
 APPLY_DATA_AUGMENTATION = True

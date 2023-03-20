@@ -3,6 +3,7 @@ from torch.utils.data import DataLoader
 
 import src.constants as constants
 
+from src.params import get_params
 from src.embedding_data_loader import load_cbow_data, load_skipgram_data
 from src.networks.cbow_network import CbowNetwork
 from src.networks.skipgram_network import SkipgramNetwork
@@ -35,4 +36,4 @@ network.eval()
 (h, c) = network.get_initial_hidden_context()
 
 traced_script_module = torch.jit.trace(network.forward, (x_sequence.to(device), (h, c)))
-traced_script_module.save(constants.EMBEDDING_MODEL_PATH)
+traced_script_module.save(get_params().EMBEDDING_MODEL_PATH)

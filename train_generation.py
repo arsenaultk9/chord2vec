@@ -8,6 +8,7 @@ import src.midi_generator as midi_generator
 import src.note_generator as note_generator
 import src.constants as constants
 
+from src.params import get_params
 from src.generation_data_loader import load_generation_data
 from src.networks.lstm_embedding_network import LstmEmbeddingNetwork
 from src.networks.lstm_vanilla_network import LstmVanillaNetwork
@@ -24,7 +25,7 @@ train_data_loader = DataLoader(train_dataset, constants.BATCH_SIZE, constants.SH
 valid_data_loader = DataLoader(valid_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 test_data_loader = DataLoader(test_dataset, constants.BATCH_SIZE, constants.SHUFFLE_DATA)
 
-embedding_model = torch.load(constants.EMBEDDING_MODEL_PATH, map_location=device)
+embedding_model = torch.load(get_params().EMBEDDING_MODEL_PATH, map_location=device)
 embedding_weigths = list(embedding_model.parameters())[0]
 
 network = LstmVanillaNetwork(len(vocabulary.suffixes_to_indexes.values()), embedding_weigths).to(device)

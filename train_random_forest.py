@@ -9,6 +9,7 @@ import src.midi_generator as midi_generator
 import src.note_generator as note_generator
 import src.constants as constants
 
+from src.params import get_params
 from src.generation_data_loader import load_random_forest_data
 
 use_cuda = torch.cuda.is_available()
@@ -18,7 +19,7 @@ print('data loading')
 vocabulary, X_train, y_train, X_test, y_test = load_random_forest_data()
 
 # Shuffle data
-if constants.SHUFFLE_DATA_RANDOM_FOREST:
+if get_params().SHUFFLE_DATA_RANDOM_FOREST:
     X_train = X_train + X_test
     y_train = y_train + y_test
 
@@ -35,7 +36,7 @@ if constants.SHUFFLE_DATA_RANDOM_FOREST:
     y_train, y_test = y_train[0:test_split], y_train[test_split:all_data_lenght]
 
 # Use embeddings instead of class values
-embedding_model = torch.load(constants.EMBEDDING_MODEL_PATH, map_location=device)
+embedding_model = torch.load(get_params().EMBEDDING_MODEL_PATH, map_location=device)
 embedding_weigths = list(embedding_model.parameters())[0]
 
 embeddings = nn.Embedding.from_pretrained(embedding_weigths)
@@ -47,7 +48,7 @@ def get_embedded(X, Y):
 
     return X_train_embed, X
 
-if constants.EMBED_DATA_RANDOM_FOREST:
+if get_params().EMBED_DATA_RANDOM_FOREST:
     X_train, X_original = get_embedded(X_train, y_train)
     X_test, X_test_original = get_embedded(X_test, y_test)
 else:
@@ -91,7 +92,7 @@ def generate_sequence(primer_sequence, primer_sequence_embed):
         generated_sequence += y_pred
         primer_sequence = primer_sequence[1:] + y_pred
 
-        if not constants.EMBED_DATA_RANDOM_FOREST:
+        if not get_params().EMBED_DATA_RANDOM_FOREST:
             primer_sequence_embed = primer_sequence
             continue
 
