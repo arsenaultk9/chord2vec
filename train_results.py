@@ -79,7 +79,7 @@ pretrain_runs = [
 
 for run in pretrain_runs:
     for run_instance in run['run_instance']:
-        results = [0.1234, 0.2345, 0.4567, 0.5678]
+        results = []
 
         for run_index in range(run_instance['nb_of_runs']):
             params = Params(embed_data=run['embed'],
