@@ -5,13 +5,13 @@ class Params:
                  generation_training_data_path = './data/training_data_small.pkl',
                  embedding_model_path = 'result_model/cbow_network.pt',
                  shuffle_data_random_forest = True,
-                 embed_data_random_forest= True):
+                 embed_data= True):
         self.window_slide_range = window_slide_range
         self.embedding_training_data_path = embedding_training_data_path
         self.generation_training_data_path = generation_training_data_path
         self.embedding_model_path = embedding_model_path
         self.shuffle_data_random_forest = shuffle_data_random_forest
-        self.embed_data_random_forest = embed_data_random_forest
+        self.embed_data = embed_data
 
 
 global params

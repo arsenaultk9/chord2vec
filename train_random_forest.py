@@ -51,7 +51,7 @@ def train_random_forest(params: Params):
 
         return X_train_embed, X
 
-    if get_params().embed_data_random_forest:
+    if get_params().embed_data:
         X_train, X_original = get_embedded(X_train, y_train)
         X_test, X_test_original = get_embedded(X_test, y_test)
     else:
@@ -95,7 +95,7 @@ def train_random_forest(params: Params):
             generated_sequence += y_pred
             primer_sequence = primer_sequence[1:] + y_pred
 
-            if not get_params().embed_data_random_forest:
+            if not get_params().embed_data:
                 primer_sequence_embed = primer_sequence
                 continue
 

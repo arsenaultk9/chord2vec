@@ -31,7 +31,9 @@ def train_generation(params: Params):
     embedding_model = torch.load(get_params().embedding_model_path, map_location=device)
     embedding_weigths = list(embedding_model.parameters())[0]
 
-    network = LstmVanillaNetwork(len(vocabulary.suffixes_to_indexes.values()), embedding_weigths).to(device)
+    network = LstmEmbeddingNetwork(len(vocabulary.suffixes_to_indexes.values()), embedding_weigths).to(device) if get_params(
+    ).embed_data else LstmVanillaNetwork(len(vocabulary.suffixes_to_indexes.values()), embedding_weigths).to(device)
+    
     trainer = NetworkTrainer(network, train_data_loader, valid_data_loader, test_data_loader, constants.GENERATION_EPOCHS, is_dynamic_lr_scheduler=True)
 
     for epoch in range(1, constants.GENERATION_EPOCHS + 1):
