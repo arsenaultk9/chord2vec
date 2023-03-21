@@ -15,10 +15,14 @@ large_run = {'nb_of_runs': 1, 'column': 'F'}
 # Must do embeddings first.
 pretrain_runs = [
     # Hidden Forest Embed
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 43, 'embed': True, 'shuffle': True, 'slide_range': 1,'generation_data': './data/training_data_small.pkl', 'embed_data': '', 
+        'model_path': 'result_model/cbow_network_augmented.pt'},
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 44, 'embed': True, 'shuffle': True, 'slide_range': 1,'generation_data': './data/training_data_small_augmented.pkl', 'embed_data': '', 
+        'model_path': 'result_model/cbow_network_augmented.pt'},
     {'program': train_random_forest, 'run_instance': [small_run], 'row': 46, 'embed': True, 'shuffle': True, 'slide_range': 5,'generation_data': './data/training_data_small.pkl', 'embed_data': '', 
-     'model_path': 'result_model/cbow_network_augmented.pt'},
-     {'program': train_random_forest, 'run_instance': [small_run], 'row': 46, 'embed': True, 'shuffle': True, 'slide_range': 5,'generation_data': './data/training_data_small_augmented.pkl', 'embed_data': '', 
-     'model_path': 'result_model/cbow_network_augmented.pt'},
+        'model_path': 'result_model/cbow_network_augmented.pt'},
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 47, 'embed': True, 'shuffle': True, 'slide_range': 5,'generation_data': './data/training_data_small_augmented.pkl', 'embed_data': '', 
+        'model_path': 'result_model/cbow_network_augmented.pt'},
 ]
 
 for run in pretrain_runs:
