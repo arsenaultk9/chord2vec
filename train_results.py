@@ -162,20 +162,20 @@ runs = [
         
 for run in runs:
     for run_instance in run['run_instance']:
-        results = [0.1234, 0.2345, 0.3456, 0.4567]
+        results = []
 
-        # for run_index in range(run_instance['nb_of_runs']):
-        #     data = run_instance['data'][run['data']]
+        for run_index in range(run_instance['nb_of_runs']):
+            data = run_instance['data'][run['data']]
 
-        #     params = Params(embed_data=run['embed'],
-        #                     shuffle_data_random_forest=run['shuffle'],
-        #                     window_slide_range=1,   # Alway use full window slide
-        #                     generation_training_data_path=data,
-        #                     embedding_model_path=run['model_path']
-        #                     )
+            params = Params(embed_data=run['embed'],
+                            shuffle_data_random_forest=run['shuffle'],
+                            window_slide_range=1,   # Alway use full window slide
+                            generation_training_data_path=data,
+                            embedding_model_path=run['model_path']
+                            )
             
-        #     result = run['program'](params)
-        #     results.append(result)
+            result = run['program'](params)
+            results.append(result)
 
         # Format result. Cannot put '=' at start because excel think it's hacking.
         results = [str(r) for r in results]
