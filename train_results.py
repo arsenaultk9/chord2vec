@@ -30,49 +30,49 @@ large_run = {'nb_of_runs': 1, 'column': 'F'}
 # Must do embeddings first.
 pretrain_runs = [
     # Embddings 
-    {'program': train_embedding, 'run_instance': [large_run], 'row': 55, 'embed': '', 'shuffle': '', 'slide_range': '','generation_data': '', 'embed_data': data_large, 
+    {'program': train_embedding, 'run_instance': [large_run], 'row': 67, 'embed': '', 'shuffle': '', 'slide_range': '','generation_data': '', 'embed_data': data_large, 
         'model_path': model_path},
-    {'program': train_embedding, 'run_instance': [large_run], 'row': 56, 'embed': '', 'shuffle': '', 'slide_range': '','generation_data': '', 'embed_data': data_large_aug, 
+    {'program': train_embedding, 'run_instance': [large_run], 'row': 68, 'embed': '', 'shuffle': '', 'slide_range': '','generation_data': '', 'embed_data': data_large_aug, 
         'model_path': model_path_aug},
 
     # LSTM Embed
-    {'program': train_generation, 'run_instance': [small_run], 'row': 29, 'embed': True, 'shuffle': '', 'slide_range': 1,'generation_data': data_small, 'embed_data': '', 
+    {'program': train_generation, 'run_instance': [small_run], 'row': 41, 'embed': True, 'shuffle': '', 'slide_range': 1,'generation_data': data_small, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_generation, 'run_instance': [small_run], 'row': 30, 'embed': True, 'shuffle': '', 'slide_range': 1,'generation_data': data_small_aug, 'embed_data': '', 
+    {'program': train_generation, 'run_instance': [small_run], 'row': 42, 'embed': True, 'shuffle': '', 'slide_range': 1,'generation_data': data_small_aug, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_generation, 'run_instance': [small_run], 'row': 32, 'embed': True, 'shuffle': '', 'slide_range': 5,'generation_data': data_small, 'embed_data': '', 
+    {'program': train_generation, 'run_instance': [small_run], 'row': 44, 'embed': True, 'shuffle': '', 'slide_range': 5,'generation_data': data_small, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_generation, 'run_instance': [small_run], 'row': 33, 'embed': True, 'shuffle': '', 'slide_range': 5,'generation_data': data_small_aug, 'embed_data': '', 
+    {'program': train_generation, 'run_instance': [small_run], 'row': 45, 'embed': True, 'shuffle': '', 'slide_range': 5,'generation_data': data_small_aug, 'embed_data': '', 
         'model_path': model_path_aug},
 
     # LSTM Vanilla
-    {'program': train_generation, 'run_instance': [small_run], 'row': 36, 'embed': False, 'shuffle': '', 'slide_range': 1,'generation_data': data_small, 'embed_data': '', 
+    {'program': train_generation, 'run_instance': [small_run], 'row': 48, 'embed': False, 'shuffle': '', 'slide_range': 1,'generation_data': data_small, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_generation, 'run_instance': [small_run], 'row': 37, 'embed': False, 'shuffle': '', 'slide_range': 1,'generation_data': data_small_aug, 'embed_data': '', 
+    {'program': train_generation, 'run_instance': [small_run], 'row': 49, 'embed': False, 'shuffle': '', 'slide_range': 1,'generation_data': data_small_aug, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_generation, 'run_instance': [small_run], 'row': 39, 'embed': False, 'shuffle': '', 'slide_range': 5,'generation_data': data_small, 'embed_data': '', 
+    {'program': train_generation, 'run_instance': [small_run], 'row': 51, 'embed': False, 'shuffle': '', 'slide_range': 5,'generation_data': data_small, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_generation, 'run_instance': [small_run], 'row': 40, 'embed': False, 'shuffle': '', 'slide_range': 5,'generation_data': data_small_aug, 'embed_data': '', 
+    {'program': train_generation, 'run_instance': [small_run], 'row': 52, 'embed': False, 'shuffle': '', 'slide_range': 5,'generation_data': data_small_aug, 'embed_data': '', 
         'model_path': model_path_aug},
 
     # Hidden Forest Embed
-    {'program': train_random_forest, 'run_instance': [small_run], 'row': 43, 'embed': True, 'shuffle': True, 'slide_range': 1,'generation_data': data_small, 'embed_data': '', 
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 55, 'embed': True, 'shuffle': True, 'slide_range': 1,'generation_data': data_small, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': [small_run], 'row': 44, 'embed': True, 'shuffle': True, 'slide_range': 1,'generation_data': data_small_aug, 'embed_data': '', 
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 56, 'embed': True, 'shuffle': True, 'slide_range': 1,'generation_data': data_small_aug, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': [small_run], 'row': 46, 'embed': True, 'shuffle': True, 'slide_range': 5,'generation_data': data_small, 'embed_data': '', 
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 58, 'embed': True, 'shuffle': True, 'slide_range': 5,'generation_data': data_small, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': [small_run], 'row': 47, 'embed': True, 'shuffle': True, 'slide_range': 5,'generation_data': data_small_aug, 'embed_data': '', 
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 59, 'embed': True, 'shuffle': True, 'slide_range': 5,'generation_data': data_small_aug, 'embed_data': '', 
         'model_path': model_path_aug},
 
     # Hidden Forest Vanilla
-    {'program': train_random_forest, 'run_instance': [small_run], 'row': 50, 'embed': False, 'shuffle': True, 'slide_range': 1,'generation_data': data_small, 'embed_data': '', 
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 62, 'embed': False, 'shuffle': True, 'slide_range': 1,'generation_data': data_small, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': [small_run], 'row': 51, 'embed': False, 'shuffle': True, 'slide_range': 1,'generation_data': data_small_aug, 'embed_data': '', 
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 63, 'embed': False, 'shuffle': True, 'slide_range': 1,'generation_data': data_small_aug, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': [small_run], 'row': 53, 'embed': False, 'shuffle': True, 'slide_range': 5,'generation_data': data_small, 'embed_data': '', 
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 65, 'embed': False, 'shuffle': True, 'slide_range': 5,'generation_data': data_small, 'embed_data': '', 
         'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': [small_run], 'row': 54, 'embed': False, 'shuffle': True, 'slide_range': 5,'generation_data': data_small_aug, 'embed_data': '', 
+    {'program': train_random_forest, 'run_instance': [small_run], 'row': 66, 'embed': False, 'shuffle': True, 'slide_range': 5,'generation_data': data_small_aug, 'embed_data': '', 
         'model_path': model_path_aug},
     
 ]
