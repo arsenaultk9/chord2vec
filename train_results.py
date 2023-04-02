@@ -128,9 +128,9 @@ runs = [
 
     # LSTM Vanilla
     {'program': train_generation, 'run_instance': all_runs, 'row': 9, 'embed': False, 'shuffle': False, 'data': 'normal', 'model_path': model_path},
-    {'program': train_generation, 'run_instance': all_runs, 'row': 10, 'embed': False, 'shuffle': False, 'data': 'normal', 'model_path': model_path_aug},
+    # {'program': train_generation, 'run_instance': all_runs, 'row': 10, 'embed': False, 'shuffle': False, 'data': 'normal', 'model_path': model_path_aug},
     {'program': train_generation, 'run_instance': all_runs, 'row': 11, 'embed': False, 'shuffle': False, 'data': 'augmented', 'model_path': model_path},
-    {'program': train_generation, 'run_instance': all_runs, 'row': 12, 'embed': False, 'shuffle': False, 'data': 'augmented', 'model_path': model_path_aug},
+    # {'program': train_generation, 'run_instance': all_runs, 'row': 12, 'embed': False, 'shuffle': False, 'data': 'augmented', 'model_path': model_path_aug},
 
     ### Random Forest
 
