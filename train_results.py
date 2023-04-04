@@ -116,6 +116,7 @@ medium_run = {'nb_of_runs': 3, 'column': 'F', 'data': {'normal': data_medium, 'a
 large_run = {'nb_of_runs': 1, 'column': 'G', 'data': {'normal': data_large, 'augmented': data_large_aug}}
 
 all_runs = [small_run, medium_run, large_run]
+all_but_large_runs = [small_run, medium_run]
 
 runs = [
     ### LSTM
@@ -137,26 +138,26 @@ runs = [
     # Random Forest Embed - No Shuffle
     {'program': train_random_forest, 'run_instance': all_runs, 'row': 15, 'embed': True, 'shuffle': False, 'data': 'normal', 'model_path': model_path},
     {'program': train_random_forest, 'run_instance': all_runs, 'row': 16, 'embed': True, 'shuffle': False, 'data': 'normal', 'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': all_runs, 'row': 17, 'embed': True, 'shuffle': False, 'data': 'augmented', 'model_path': model_path},
-    {'program': train_random_forest, 'run_instance': all_runs, 'row': 18, 'embed': True, 'shuffle': False, 'data': 'augmented', 'model_path': model_path_aug},
+    {'program': train_random_forest, 'run_instance': all_but_large_runs, 'row': 17, 'embed': True, 'shuffle': False, 'data': 'augmented', 'model_path': model_path},
+    {'program': train_random_forest, 'run_instance': all_but_large_runs, 'row': 18, 'embed': True, 'shuffle': False, 'data': 'augmented', 'model_path': model_path_aug},
 
     # Random Forest Embed - Shuffle
     {'program': train_random_forest, 'run_instance': all_runs, 'row': 20, 'embed': True, 'shuffle': True, 'data': 'normal', 'model_path': model_path},
     {'program': train_random_forest, 'run_instance': all_runs, 'row': 21, 'embed': True, 'shuffle': True, 'data': 'normal', 'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': all_runs, 'row': 22, 'embed': True, 'shuffle': True, 'data': 'augmented', 'model_path': model_path},
-    {'program': train_random_forest, 'run_instance': all_runs, 'row': 23, 'embed': True, 'shuffle': True, 'data': 'augmented', 'model_path': model_path_aug},
+    {'program': train_random_forest, 'run_instance': all_but_large_runs, 'row': 22, 'embed': True, 'shuffle': True, 'data': 'augmented', 'model_path': model_path},
+    {'program': train_random_forest, 'run_instance': all_but_large_runs, 'row': 23, 'embed': True, 'shuffle': True, 'data': 'augmented', 'model_path': model_path_aug},
 
     # Random Forest Vanilla - No Shuffle
     {'program': train_random_forest, 'run_instance': all_runs, 'row': 26, 'embed': False, 'shuffle': False, 'data': 'normal', 'model_path': model_path},
     {'program': train_random_forest, 'run_instance': all_runs, 'row': 27, 'embed': False, 'shuffle': False, 'data': 'normal', 'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': all_runs, 'row': 28, 'embed': False, 'shuffle': False, 'data': 'augmented', 'model_path': model_path},
-    {'program': train_random_forest, 'run_instance': all_runs, 'row': 29, 'embed': False, 'shuffle': False, 'data': 'augmented', 'model_path': model_path_aug},
+    {'program': train_random_forest, 'run_instance': all_but_large_runs, 'row': 28, 'embed': False, 'shuffle': False, 'data': 'augmented', 'model_path': model_path},
+    {'program': train_random_forest, 'run_instance': all_but_large_runs, 'row': 29, 'embed': False, 'shuffle': False, 'data': 'augmented', 'model_path': model_path_aug},
 
     # Random Forest Vanilla - Shuffle
     {'program': train_random_forest, 'run_instance': all_runs, 'row': 31, 'embed': False, 'shuffle': True, 'data': 'normal', 'model_path': model_path},
     {'program': train_random_forest, 'run_instance': all_runs, 'row': 32, 'embed': False, 'shuffle': True, 'data': 'normal', 'model_path': model_path_aug},
-    {'program': train_random_forest, 'run_instance': all_runs, 'row': 33, 'embed': False, 'shuffle': True, 'data': 'augmented', 'model_path': model_path},
-    {'program': train_random_forest, 'run_instance': all_runs, 'row': 34, 'embed': False, 'shuffle': True, 'data': 'augmented', 'model_path': model_path_aug},
+    {'program': train_random_forest, 'run_instance': all_but_large_runs, 'row': 33, 'embed': False, 'shuffle': True, 'data': 'augmented', 'model_path': model_path},
+    {'program': train_random_forest, 'run_instance': all_but_large_runs, 'row': 34, 'embed': False, 'shuffle': True, 'data': 'augmented', 'model_path': model_path_aug},
 
 ]
         
